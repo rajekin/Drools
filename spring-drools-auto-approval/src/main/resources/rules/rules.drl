@@ -1,0 +1,44 @@
+package rules
+ 
+
+import com.idexcel.model.CreditApplication
+
+	rule "determine eligibility"
+
+    when
+    app: CreditApplication( creditScore <= 710  )
+    
+    then
+	app.setAutoApprovalElgible(false);
+	app.setReason("Applicant score less than 710. Not eligible for auto approval process");
+	app.setErrorCode("999");
+
+end
+
+rule "calculate dti"
+
+
+
+    when
+	app: CreditApplication( creditScore > 710  ) 
+	
+	then
+	app.setDebtToIncomeRatio(app.getMonthlyDebtPayment().divide(app.getIncome())); 
+		update(app);
+	
+	end
+	
+	
+	rule "new rule"
+	salience 1
+	
+	when
+		app:CreditApplication( creditScore > 710 && app.debtToIncomeRatio > 0.28 )
+		
+	then
+		app.setAutoApprovalElgible(false);
+		app.setReason("High DTI");
+		app.setErrorCode("999");
+end
+	
+	
