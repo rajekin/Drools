@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BRMS Server Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #000000;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        .status-section {
+            display: inline-block;
+            margin: 30px;
+        }
+
+        .status-heading {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .meter-container {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meter {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #f2f2f2;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .meter span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #7BEFB2 50%, #f2f2f2 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .urls-container {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .urls-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .urls-content table {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            text-align: left;
+            color: #ffffff;
+        }
+
+        .urls-content table th,
+        .urls-content table td {
+            padding: 10px;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .urls-content table th {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .urls-content table td {
+            background-color: #3d3d3d;
+        }
+
+        .go-back-link {
+            display: none;
+            margin-top: 10px;
+            color: #ffffff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .go-back-link:hover {
+            color: #cccccc;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>BRMS Server Status</h1>
+    <div class="status-section">
+        <h2 class="status-heading">Decision Center Servers</h2>
+        <div class="meter-container">
+            <div class="meter" id="decisionCenterMeter">
+                <span th:text="${decisionCenterUpPercentage}"></span>
+            </div>
+        </div>
+        <div id="decisionCenterUrls" class="urls-container">
+            <div class="urls-content">
+                <table>
+                    <tr>
+                        <th>Server Type</th>
+                        <th>Status</th>
+                        <th>Last Check</th>
+                        <th>URL</th>
+                    </tr>
+                    <tr th:each="server : ${decisionCenterStatusList}">
+                        <td>Decision Center</td>
+                        <td th:text="${server.isUp ? 'Up' : 'Down'}"></td>
+                        <td th:text="${server.lastStatusCheck}"></td>
+                        <td th:text="${server.url}"></td>
+                    </tr>
+                </table>
+                <div id="decisionCenterGoBack" class="go-back-link">Go Back</div>
+            </div>
+        </div>
+    </div>
+    <div class="status-section">
+        <h2 class="status-heading">Rule Execution Servers</h2>
+        <div class="meter-container">
+            <div class="meter" id="ruleExecutionServerMeter">
+                <span th:text="${ruleExecutionServerUpPercentage}"></span>
+            </div>
+        </div>
+        <div id="ruleExecutionServerUrls" class="urls-container">
+            <div class="urls-content">
+                <table>
+                    <tr>
+                        <th>Server Type</th>
+                        <th>Status</th>
+                        <th>Last Check</th>
+                        <th>URL</th>
+                    </tr>
+                    <tr th:each="server : ${ruleExecutionServerStatusList}">
+                        <td>Rule Execution Server</td>
+                        <td th:text="${server.isUp ? 'Up' : 'Down'}"></td>
+                        <td th:text="${server.lastStatusCheck}"></td>
+                        <td th:text="${server.url}"></td>
+                    </tr>
+                </table>
+                <div id="ruleExecutionServerGoBack" class="go-back-link">Go Back</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var decisionCenterMeter = document.getElementById('decisionCenterMeter');
+            var decisionCenterUrls = document.getElementById('decisionCenterUrls');
+            var decisionCenterGoBack = document.getElementById('decisionCenterGoBack');
+            var ruleExecutionServerMeter = document.getElementById('ruleExecutionServerMeter');
+            var ruleExecutionServerUrls = document.getElementById('ruleExecutionServerUrls');
+            var ruleExecutionServerGoBack = document.getElementById('ruleExecutionServerGoBack');
+
+            decisionCenterMeter.addEventListener('click', function() {
+                toggleUrls(decisionCenterUrls, decisionCenterGoBack);
+            });
+
+            ruleExecutionServerMeter.addEventListener('click', function() {
+                toggleUrls(ruleExecutionServerUrls, ruleExecutionServerGoBack);
+            });
+
+            decisionCenterGoBack.addEventListener('click', function() {
+                toggleUrls(decisionCenterUrls, decisionCenterGoBack);
+            });
+
+            ruleExecutionServerGoBack.addEventListener('click', function() {
+                toggleUrls(ruleExecutionServerUrls, ruleExecutionServerGoBack);
+            });
+
+            function toggleUrls(urls, goBackLink) {
+                if (urls.style.display === 'none') {
+                    urls.style.display = 'block';
+                    goBackLink.style.display = 'block';
+                } else {
+                    urls.style.display = 'none';
+                    goBackLink.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
