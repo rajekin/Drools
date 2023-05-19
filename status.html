@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Status</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        /* CSS styles */
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+             background-color: #f0f0f0; 
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: #333333;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-size: 14px;
+            border-bottom: 2px solid #d9d9d9;
+        }
+
+        td {
+            background-color: #ffffff;
+            color: #333333;
+            font-weight: 400;
+            text-align: left;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-bottom: 1px solid #d9d9d9;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .status-up {
+            color: green;
+            font-weight: 600;
+        }
+
+        .status-down {
+            color: red;
+            font-weight: 600;
+        }
+
+        .thumbs-up {
+            color: green;
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        .thumbs-down {
+            color: red;
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        .round-meter {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .round-meter .circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            position: absolute;
+        }
+
+        .round-meter .mask,
+        .round-meter .fill {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .round-meter .mask {
+            clip: rect(0, 50px, 100px, 0);
+        }
+
+        .round-meter .fill {
+            clip: rect(0, 100px, 100px, 50px);
+        }
+
+        .round-meter .percentage {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+                margin-top: 20px;
+            }
+
+            th {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .round-meter {
+                width: 80px;
+                height: 80px;
+            }
+
+            .round-meter .percentage {
+                font-size: 16px;
+                line-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Server Status</h1>
+        <div class="round-meter">
+            <div class="circle"></div>
+            <div class="mask"></div>
+            <div class="fill"></div>
+            <div class="percentage" id="overallPercentage"></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Server Name</th>
+                    <th>Status</th>
+                    <th>Last Checked</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="serverStatus : ${serverStatusList}">
+                    <td th:text="${serverStatus.name}">Server Name</td>
+                    <td>
+                        <span th:if="${serverStatus.isUp}" class="status-up">
+                            <span class="thumbs-up">&#x1F44D;</span>
+                            Operational
+                        </span>
+                        <span th:if="${!serverStatus.isUp}" class="status-down">
+                            <span class="thumbs-down">&#x1F44E;</span>
+                            Unavailable
+                        </span>
+                    </td>
+                    <td th:text="${#dates.format(serverStatus.lastStatusCheck, 'MMM dd, yyyy HH:mm:ss')}">Last Checked</td>
+                    <td th:text="${serverStatus.url != null ? serverStatus.url : ''}">URL</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<script th:inline="javascript">
+    // Calculate the percentage of servers that are up
+    var serverRows = document.querySelectorAll('tbody tr');
+    var totalServers = serverRows.length;
+    var upServers = 0;
+
+    for (var i = 0; i < serverRows.length; i++) {
+        var statusCell = serverRows[i].querySelector('td:nth-child(2)');
+        if (statusCell.querySelector('.status-up')) {
+            upServers++;
+        }
+    }
+
+    var upPercentage = (upServers / totalServers) * 100;
+
+    // Add class to the table based on the calculated percentage
+    var table = document.querySelector('table');
+
+    if (upPercentage > 50) {
+        table.classList.add('thumbs-up');
+    } else {
+        table.classList.add('thumbs-down');
+    }
+
+    // Update the overall percentage in the round meter
+    var overallPercentageElement = document.getElementById('overallPercentage');
+    overallPercentageElement.textContent = Math.round(upPercentage) + '%';
+
+    // Adjust the fill of the round meter based on the overall percentage
+    var fillElement = document.querySelector('.round-meter .fill');
+    fillElement.style.transform = 'rotate(' + (upPercentage * 3.6) + 'deg)';
+
+    // Adjust the color of the round meter based on the overall percentage
+    var maskElement = document.querySelector('.round-meter .mask');
+    if (upPercentage > 50) {
+        maskElement.style.backgroundColor = 'rgba(0, 128, 0, 0.1)'; // Green color for more than 50% servers working
+    } else {
+        maskElement.style.backgroundColor = 'rgba(255, 0, 0, 0.1)'; // Red color for less than or equal to 50% servers working
+    }
+</script>
+</body>
+</html>
