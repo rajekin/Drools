@@ -1,12 +1,14 @@
 package net.codejava.notification;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,6 +22,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -43,7 +50,7 @@ public class EmailNotificationScheduler {
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     }
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void sendEmailNotification() {
         String recipient = "decisionservernotify@gmail.com"; // Replace with the recipient email address
         String subject = "Server Downtime Notification";
@@ -74,6 +81,9 @@ public class EmailNotificationScheduler {
                     emailContent.append("</tr>");
                 }
                 emailContent.append("</table>");
+                
+                emailContent.append("<br><br>");
+                emailContent.append("<p> Contact ");
 
                 // Set the HTML content as the email body
                 helper.setText(emailContent.toString(), true);
@@ -234,6 +244,63 @@ public class EmailNotificationScheduler {
 
             // Put the updated value back into the map
             map.put(key, value);
+        }
+    }
+    
+    @Scheduled(cron = "0 */1 * * * *")
+    public void sendDailyChart() {
+        String recipient = "decisionservernotify@gmail.com"; // Replace with the recipient email address
+        String subject = "Daily Server Downtime Chart";
+
+        // Create the dataset for the bar chart
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (Map.Entry<String, Integer> entry : downCountMap.entrySet()) {
+            dataset.addValue(entry.getValue(), "Server Downtime Count", entry.getKey());
+        }
+
+        // Create the bar chart
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Server Downtime Count - " + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), // Chart title with the current date
+                "Server Name", // X-axis label
+                "Downtime Count", // Y-axis label
+                dataset, // Dataset
+                PlotOrientation.VERTICAL, // Plot orientation
+                true, // Show legend
+                true, // Use tooltips
+                false // Generate URLs
+        );
+
+        // Generate the image file for the chart
+        String chartFileName = "daily_chart.png";
+        try {
+            ChartUtils.saveChartAsPNG(new File(chartFileName), chart, 600, 400);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(recipient);
+            helper.setSubject(subject);
+
+            // Create the HTML content for the email
+            StringBuilder emailContent = new StringBuilder();
+            emailContent.append("<h2>Daily Server Downtime Chart</h2>");
+            emailContent.append("<p>Date: ").append(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).append("</p>");
+            emailContent.append("<img src='cid:chart'>");
+
+            // Set the HTML content as the email body
+            helper.setText(emailContent.toString(), true);
+
+            // Attach the chart image to the email
+            helper.addInline("chart", new File(chartFileName));
+
+            // Send the email
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
