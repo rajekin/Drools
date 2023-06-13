@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ODM API Integration</title>
+</head>
+<body>
+    <h1>ODM API Integration</h1>
+    <form th:action="@{/trace}" method="get">
+        <label for="decisionID">Decision ID:</label>
+        <input type="text" id="decisionID" name="decisionID" required />
+        <button type="submit">Get Trace</button>
+    </form>
+    <div th:if="${response}">
+        <h2>Trace:</h2>
+        <p th:text="${response}"></p>
+    </div>
+</body>
+</html>
