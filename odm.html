@@ -2,17 +2,96 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>ODM API Integration</title>
+    <style>
+        /* Styles for the header */
+        header {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        /* Styles for the main content */
+        .main-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .form-submit {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .response-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: left;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>ODM API Integration</h1>
-    <form th:action="@{/trace}" method="get">
-        <label for="decisionID">Decision ID:</label>
-        <input type="text" id="decisionID" name="decisionID" required />
-        <button type="submit">Get Trace</button>
-    </form>
-    <div th:if="${response}">
-        <h2>Trace:</h2>
-        <p th:text="${response}"></p>
+    <header>
+        <h1>ODM API Integration</h1>
+    </header>
+    <div class="main-content">
+        <div class="form-container">
+            <form th:action="@{/trace}" method="get">
+                <input type="text" id="decisionID" name="decisionID" placeholder="Enter Decision ID" class="form-input" required />
+                <button type="submit" class="form-submit">Get Trace</button>
+            </form>
+        </div>
+        <div th:if="${response}" class="response-container">
+            <h2>Trace:</h2>
+            <pre th:text="${response}"></pre>
+        </div>
+        <a href="/odm" class="back-button">Back</a>
     </div>
 </body>
 </html>
