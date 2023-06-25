@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>ODM API Integration</title>
     <style>
@@ -77,10 +77,13 @@
     </style>
     <link rel="stylesheet" href="https://unpkg.com/json-tree-viewer/dist/jtv.min.css">
     <script src="https://unpkg.com/json-tree-viewer/dist/jtv.min.js"></script>
-    <script>
-        function formatResponse(response) {
+    <script th:inline="javascript">
+        /* Extract the response JSON from the Thymeleaf expression */
+        var responseJson = /*[[${response}]]*/ null;
+        
+        if (responseJson) {
             // Parse the JSON response
-            var jsonResponse = JSON.parse(response);
+            var jsonResponse = JSON.parse(responseJson);
 
             // Display the response in a tree diagram view
             var container = document.getElementById('response-container');
@@ -88,11 +91,6 @@
             var viewer = new JSONTreeViewer(jsonResponse, container);
             viewer.openAtDepth(0);
         }
-    </script>
-    <script th:inline="javascript">
-        /* Extract the response JSON from the Thymeleaf expression */
-        var responseJson = [[${response}]];
-        formatResponse(JSON.stringify(responseJson));
     </script>
 </head>
 <body>
