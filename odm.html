@@ -75,6 +75,39 @@
             background-color: #333;
         }
     </style>
+    <script>
+        function formatResponse(response) {
+            // Parse the JSON response
+            var jsonResponse = JSON.parse(response);
+
+            // Create a tree-like structure using recursion
+            function createTree(obj, parentNode) {
+                var ulElement = document.createElement('ul');
+
+                for (var key in obj) {
+                    var liElement = document.createElement('li');
+                    liElement.textContent = key;
+
+                    if (typeof obj[key] === 'object') {
+                        createTree(obj[key], liElement);
+                    } else {
+                        var spanElement = document.createElement('span');
+                        spanElement.textContent = obj[key];
+                        liElement.appendChild(spanElement);
+                    }
+
+                    ulElement.appendChild(liElement);
+                }
+
+                parentNode.appendChild(ulElement);
+            }
+
+            // Create the tree-like structure from the JSON object
+            var responseContainer = document.getElementById('response-container');
+            responseContainer.innerHTML = '';
+            createTree(jsonResponse, responseContainer);
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -87,7 +120,7 @@
                 <button type="submit" class="form-submit">Get Trace</button>
             </form>
         </div>
-        <div th:if="${response}" class="response-container">
+        <div th:if="${response}" id="response-container" class="response-container">
             <h2>Trace:</h2>
             <pre th:text="${response}"></pre>
         </div>
