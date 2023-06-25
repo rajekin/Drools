@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>ODM API Integration</title>
     <style>
@@ -75,37 +75,18 @@
             background-color: #333;
         }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/json-tree-viewer/dist/jtv.min.css">
+    <script src="https://unpkg.com/json-tree-viewer/dist/jtv.min.js"></script>
     <script>
         function formatResponse(response) {
             // Parse the JSON response
             var jsonResponse = JSON.parse(response);
 
-            // Create a tree-like structure using recursion
-            function createTree(obj, parentNode) {
-                var ulElement = document.createElement('ul');
-
-                for (var key in obj) {
-                    var liElement = document.createElement('li');
-                    liElement.textContent = key;
-
-                    if (typeof obj[key] === 'object') {
-                        createTree(obj[key], liElement);
-                    } else {
-                        var spanElement = document.createElement('span');
-                        spanElement.textContent = obj[key];
-                        liElement.appendChild(spanElement);
-                    }
-
-                    ulElement.appendChild(liElement);
-                }
-
-                parentNode.appendChild(ulElement);
-            }
-
-            // Create the tree-like structure from the JSON object
-            var responseContainer = document.getElementById('response-container');
-            responseContainer.innerHTML = '';
-            createTree(jsonResponse, responseContainer);
+            // Display the response in a tree diagram view
+            var container = document.getElementById('response-container');
+            container.innerHTML = '';
+            var viewer = new JSONTreeViewer(jsonResponse, container);
+            viewer.openAtDepth(0);
         }
     </script>
 </head>
