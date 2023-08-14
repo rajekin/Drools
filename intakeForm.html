@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Person Intake Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, h3, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set a base font and line height for better readability */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: flex;
+            align-items: center; /* Center icon and text vertically */
+            font-weight: bold;
+            width: 100%;
+            max-width: 200px; /* Limit label width for consistent alignment */
+        }
+
+        input[type="text"],
+        select {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        /* No Results Styles */
+        .no-results {
+            color: #FF5733;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            label {
+                max-width: 100%; /* Allow labels to take full width on mobile */
+            }
+        }
+
+        /* Styles for messages */
+        .message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            background-color: #7BE363;
+            color: #fff;
+        }
+
+        .error-message {
+            background-color: #FF5733;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="main-section">
+            <h1><i class="fas fa-user"></i> Person Intake Form</h1>
+
+           <div th:if="${successMessage}" class="message success-message">
+    <p th:text="${successMessage}"></p>
+</div>
+
+            <!-- Display Error Message -->
+            <div th:if="${errorMessage}" class="message error-message">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+            <form action="#" th:action="@{/intake}" th:object="${person}" method="post">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Name:</label>
+                    <input type="text" id="name" th:field="*{name}" />
+                </div>
+                <div class="form-group">
+                    <label for="age"><i class="fas fa-calendar"></i> Age:</label>
+                    <input type="text" id="age" th:field="*{age}" />
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                    <input type="text" id="email" th:field="*{email}" />
+                </div>
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> Phone:</label>
+                    <input type="text" id="phone" th:field="*{phone}" />
+                </div>
+                <div class="form-group">
+                    <label for="address"><i class="fas fa-map-marker-alt"></i> Address:</label>
+                    <input type="text" id="address" th:field="*{address}" />
+                </div>
+                <div class="form-group">
+                    <label for="city"><i class="fas fa-city"></i> City:</label>
+                    <input type="text" id="city" th:field="*{city}" />
+                </div>
+                <div class="form-group">
+                    <label for="state"><i class="fas fa-flag"></i> State:</label>
+                    <input type="text" id="state" th:field="*{state}" />
+                </div>
+                <div class="form-group">
+                    <label for="zipcode"><i class="fas fa-map-pin"></i> Zipcode:</label>
+                    <input type="text" id="zipcode" th:field="*{zipcode}" />
+                </div>
+                <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save</button>
+            </form>
+        </section>
+
+        <footer>
+            <p>&copy; 2023 BRMS. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

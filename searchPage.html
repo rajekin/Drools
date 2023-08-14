@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Person Search Page</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <style>
+        /* Your existing styles here */
+
+        /* Styles for the details pop-up */
+        .details-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .close-popup-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .person-details {
+            /* Style details here */
+            margin-top: 1rem;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 600px) {
+            /* Adjust styles for mobile */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="main-section">
+            <h1>Person Search Page</h1>
+            <form action="#" th:action="@{/search}" method="get">
+                <label for="searchType">Search by:</label>
+                <select id="searchType" name="searchType">
+                    <option value="state">State</option>
+                    <option value="name">Name</option>
+                    <option value="age">Age</option>
+                </select>
+                <input type="text" id="searchValue" name="searchValue" placeholder="Enter search value" />
+                <button type="submit">Search</button>
+            </form>
+
+            <table th:if="${!#lists.isEmpty(persons)}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zipcode</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="person : ${persons}">
+                        <td th:text="${person.name}"></td>
+                        <td th:text="${person.age}"></td>
+                        <td th:text="${person.email}"></td>
+                        <td th:text="${person.phone}"></td>
+                        <td th:text="${person.address}"></td>
+                        <td th:text="${person.city}"></td>
+                        <td th:text="${person.state}"></td>
+                        <td th:text="${person.zipcode}"></td>
+                        <td>
+                            <span th:if="${person.id}">
+                                <button class="show-details-button" th:attr="data-person-id=${person.id}">Show Details</button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Person details pop-up -->
+            <div class="details-popup" id="detailsPopup">
+                <div class="popup-content">
+                    <button class="close-popup-button" id="closePopupButton">&times;</button>
+                    <div class="person-details" id="personDetails">
+                        <!-- Person details will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2023 BRMS. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript code ... -->
+
+    <script>
+        // JavaScript code for the details pop-up ...
+    </script>
+</body>
+</html>
