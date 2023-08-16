@@ -27,43 +27,40 @@ public class PersonController {
 
     @PostMapping("/intake")
     public String submitIntakeForm(@ModelAttribute Person person, Model model) {
-        // Check if a person with the same email already exists
-    	boolean personExists = personRepository.existsByEmail(person.getEmail());
-        if (personExists) {
-            model.addAttribute("errorMessage", "Person with this email already exists");
-            model.addAttribute("person", person); // Keep the user input for the form
+        boolean decisionServiceExists = personRepository.existsByDecisionServiceAndVersion(person.getDecisionService(), person.getVersion());
+
+       
+
+        if (decisionServiceExists) {
+            model.addAttribute("errorMessage", "Decision Service with this version already exists");
+            model.addAttribute("person", person);
             return "intakeForm";
         }
         
         personRepository.save(person);
         model.addAttribute("successMessage", "Person saved successfully");
-        return "redirect:/search?personId=" + person.getId();
+        return "redirect:/details/" + person.getId();
     }
 
 
+
+   
     @GetMapping("/search")
     public String showSearchPage(@RequestParam(required = false) String searchType,
                                  @RequestParam(required = false) String searchValue,
                                  Model model) {
         List<Person> persons = new ArrayList<>();
-        if (searchType != null && searchValue != null && !searchValue.isEmpty()) {
-            if ("state".equals(searchType)) {
-                persons = personRepository.findByState(searchValue);
-            } else if ("name".equals(searchType)) {
-                persons = personRepository.findByName(searchValue);
-            } else if ("age".equals(searchType)) {
-                try {
-                    int age = Integer.parseInt(searchValue);
-                    persons = personRepository.findByAge(age);
-                } catch (NumberFormatException e) {
-                    // Invalid age input, do nothing
-                }
-            }
+        if ("estimatedDueDate".equals(searchType)) {
+            persons = personRepository.findByEstimatedDueDate(searchValue);
+        } else if ("decisionService".equals(searchType)) {
+            persons = personRepository.findByDecisionService(searchValue);
         }
 
         model.addAttribute("persons", persons);
         return "searchPage";
     }
+
+    
     
     @GetMapping("/details/{id}")
     public String showDetailsPage(@PathVariable Long id, Model model) {

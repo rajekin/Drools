@@ -1,133 +1,177 @@
 package com.example.Dashboard;
 
-
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private int age;
+    private String decisionService; // Added Decision Service attribute
     /**
-	 * @return the id
+	 * @return the decisionService
 	 */
-	public Long getId() {
-		return id;
+	public String getDecisionService() {
+		return decisionService;
 	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * @return the age
-	 */
-	public int getAge() {
-		return age;
-	}
-	/**
-	 * @param age the age to set
-	 */
-	public void setAge(int age) {
-		this.age = age;
-	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	/**
-	 * @return the phone
-	 */
-	public String getPhone() {
-		return phone;
-	}
-	/**
-	 * @param phone the phone to set
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	/**
-	 * @return the city
-	 */
-	public String getCity() {
-		return city;
-	}
-	/**
-	 * @param city the city to set
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return state;
-	}
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-	/**
-	 * @return the zipcode
-	 */
-	public String getZipcode() {
-		return zipcode;
-	}
-	/**
-	 * @param zipcode the zipcode to set
-	 */
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-	private String email;
-    private String phone;
-    private String address;
-    private String city;
-    private String state;
-    private String zipcode;
-    
-    // Add getters and setters
-}
 
+	/**
+	 * @param decisionService the decisionService to set
+	 */
+	public void setDecisionService(String decisionService) {
+		this.decisionService = decisionService;
+	}
+
+	private String version;
+    private String typeChange;
+    @Column(name = "`group`") // Use backticks to escape the reserved keyword
+    private String group;
+    private String description;
+    private String stage;
+    private String status;
+    private String environment;
+    private String estimatedDueDate;
+    private String decisionAutomated;
+    private String decisionModel;
+    private String brmsEpic;
+    private String extEpic;
+    private String dmnMaturityLevel;
+    private String projectFundingName;
+    private String isFunded;
+    
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+   
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getTypeChange() {
+        return typeChange;
+    }
+
+    public void setTypeChange(String typeChange) {
+        this.typeChange = typeChange;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public String getEstimatedDueDate() {
+        return estimatedDueDate;
+    }
+
+    public void setEstimatedDueDate(String estimatedDueDate) {
+        this.estimatedDueDate = estimatedDueDate;
+    }
+
+    public String getDecisionAutomated() {
+        return decisionAutomated;
+    }
+
+    public void setDecisionAutomated(String decisionAutomated) {
+        this.decisionAutomated = decisionAutomated;
+    }
+
+    public String getDecisionModel() {
+        return decisionModel;
+    }
+
+    public void setDecisionModel(String decisionModel) {
+        this.decisionModel = decisionModel;
+    }
+
+    public String getBrmsEpic() {
+        return brmsEpic;
+    }
+
+    public void setBrmsEpic(String brmsEpic) {
+        this.brmsEpic = brmsEpic;
+    }
+
+    public String getExtEpic() {
+        return extEpic;
+    }
+
+    public void setExtEpic(String extEpic) {
+        this.extEpic = extEpic;
+    }
+
+    public String getDmnMaturityLevel() {
+        return dmnMaturityLevel;
+    }
+
+    public void setDmnMaturityLevel(String dmnMaturityLevel) {
+        this.dmnMaturityLevel = dmnMaturityLevel;
+    }
+
+    public String getProjectFundingName() {
+        return projectFundingName;
+    }
+
+    public void setProjectFundingName(String projectFundingName) {
+        this.projectFundingName = projectFundingName;
+    }
+
+    public String getIsFunded() {
+        return isFunded;
+    }
+
+    public void setIsFunded(String isFunded) {
+        this.isFunded = isFunded;
+    }
+
+   }

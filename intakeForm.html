@@ -154,8 +154,8 @@
             <h1><i class="fas fa-user"></i> Person Intake Form</h1>
 
            <div th:if="${successMessage}" class="message success-message">
-    <p th:text="${successMessage}"></p>
-</div>
+               <p th:text="${successMessage}"></p>
+           </div>
 
             <!-- Display Error Message -->
             <div th:if="${errorMessage}" class="message error-message">
@@ -164,36 +164,64 @@
 
             <form action="#" th:action="@{/intake}" th:object="${person}" method="post">
                 <div class="form-group">
-                    <label for="name"><i class="fas fa-user"></i> Name:</label>
-                    <input type="text" id="name" th:field="*{name}" />
+                    <label for="version"><i class="fas fa-code-branch"></i> Version:</label>
+                    <input type="text" id="version" th:field="*{version}" />
                 </div>
                 <div class="form-group">
-                    <label for="age"><i class="fas fa-calendar"></i> Age:</label>
-                    <input type="text" id="age" th:field="*{age}" />
+                    <label for="typechange"><i class="fas fa-exchange-alt"></i> Type Change:</label>
+                    <input type="text" id="typechange" th:field="*{typeChange}" />
                 </div>
                 <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> Email:</label>
-                    <input type="text" id="email" th:field="*{email}" />
+                    <label for="group"><i class="fas fa-users"></i> Group:</label>
+                    <input type="text" id="group" th:field="*{group}" />
                 </div>
                 <div class="form-group">
-                    <label for="phone"><i class="fas fa-phone"></i> Phone:</label>
-                    <input type="text" id="phone" th:field="*{phone}" />
+                    <label for="description"><i class="fas fa-info-circle"></i> Description:</label>
+                    <input type="text" id="description" th:field="*{description}" />
                 </div>
                 <div class="form-group">
-                    <label for="address"><i class="fas fa-map-marker-alt"></i> Address:</label>
-                    <input type="text" id="address" th:field="*{address}" />
+                    <label for="stage"><i class="fas fa-clipboard-check"></i> Stage:</label>
+                    <input type="text" id="stage" th:field="*{stage}" />
                 </div>
                 <div class="form-group">
-                    <label for="city"><i class="fas fa-city"></i> City:</label>
-                    <input type="text" id="city" th:field="*{city}" />
+                    <label for="status"><i class="fas fa-check-square"></i> Status:</label>
+                    <input type="text" id="status" th:field="*{status}" />
                 </div>
                 <div class="form-group">
-                    <label for="state"><i class="fas fa-flag"></i> State:</label>
-                    <input type="text" id="state" th:field="*{state}" />
+                    <label for="environment"><i class="fas fa-globe"></i> Environment:</label>
+                    <input type="text" id="environment" th:field="*{environment}" />
                 </div>
                 <div class="form-group">
-                    <label for="zipcode"><i class="fas fa-map-pin"></i> Zipcode:</label>
-                    <input type="text" id="zipcode" th:field="*{zipcode}" />
+                    <label for="duedate"><i class="far fa-calendar-alt"></i> Estimated Due Date:</label>
+                    <input type="text" id="duedate" th:field="*{estimatedDueDate}" />
+                </div>
+                <div class="form-group">
+                    <label for="decisionautomated"><i class="fas fa-robot"></i> Decision Automated:</label>
+                    <input type="text" id="decisionautomated" th:field="*{decisionAutomated}" />
+                </div>
+                <div class="form-group">
+                    <label for="decisionmodel"><i class="fas fa-cogs"></i> Decision Model:</label>
+                    <input type="text" id="decisionmodel" th:field="*{decisionModel}" />
+                </div>
+                <div class="form-group">
+                    <label for="brmsepic"><i class="fas fa-briefcase"></i> BRMS Epic:</label>
+                    <input type="text" id="brmsepic" th:field="*{brmsEpic}" />
+                </div>
+                <div class="form-group">
+                    <label for="extepic"><i class="fas fa-file-alt"></i> Ext Epic:</label>
+                    <input type="text" id="extepic" th:field="*{extEpic}" />
+                </div>
+                <div class="form-group">
+                    <label for="dmnmaturity"><i class="fas fa-chart-line"></i> DMN Maturity Level:</label>
+                    <input type="text" id="dmnmaturity" th:field="*{dmnMaturityLevel}" />
+                </div>
+                <div class="form-group">
+                    <label for="fundingname"><i class="fas fa-money-bill"></i> Project Funding Name:</label>
+                    <input type="text" id="fundingname" th:field="*{projectFundingName}" />
+                </div>
+                <div class="form-group">
+                    <label for="isfunded"><i class="fas fa-money-check"></i> Is Funded?</label>
+                    <input type="text" id="isfunded" th:field="*{isFunded}" />
                 </div>
                 <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save</button>
             </form>
