@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Analytics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .expandable {
+            cursor: pointer;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .expanded {
+            display: block;
+        }
+
+        .collapsed {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Hidden elements to store the Thymeleaf variables -->
+   
+        <span th:text="${percentageCovered}" id="percentageCovered" style="display: none;"></span>
+    
+    <script>
+        $(document).ready(function() {
+            // Expandable section
+            $(".expandable").click(function() {
+                $(this).next().slideToggle();
+            });
+
+            // Pie chart
+            var totalRuleCoverage = parseInt(document.getElementById('percentageCovered').textContent);
+            var remainingCoverage = 100 - totalRuleCoverage;
+
+            var pieData = {
+                datasets: [{
+                    data: [totalRuleCoverage, remainingCoverage],
+                    backgroundColor: ['#36a2eb', '#bdbdbd']
+                }],
+                labels: ['Total Rule Coverage', 'Remaining Coverage']
+            };
+
+            var pieOptions = {
+                responsive: true
+            };
+
+            var pieChart = new Chart($('#pieChart'), {
+                type: 'pie',
+                data: pieData,
+                options: pieOptions
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Event Analytics</h1>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Event Name: <span th:text="${decisionServiceName}"></span></h2>
+                <p class="card-text">Total Rule Coverage: <span th:text="${percentageCovered}"></span>%</p>
+                <div style="width: 200px; height: 200px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title expandable">Executed Rules:</h2>
+                <div class="collapsed">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Rules Fired During Execution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="firedRules : ${businessNames}">
+                                <td th:text="${firedRules}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title expandable">Rules Not Executed During Tests:</h2>
+                <div class="collapsed">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Rules Not Fired During Execution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="notfiredRules : ${elementsNotInSet}">
+                                <td th:text="${notfiredRules}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
