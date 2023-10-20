@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Your existing head content -->
+</head>
+<body>
+    <div class="container">
+        <h1>Event Analytics</h1>
+        
+        <!-- Check if there is coverage -->
+        <th:block th:if="${percentageCovered != null and not percentageCovered.isEmpty()}">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Event Name: <span th:text="${decisionServiceName}"></span></h2>
+                    <p class="card-text">Total Rule Coverage: <span th:text="${percentageCovered}"></span>%</p>
+                    <div style="width: 200px; height: 200px;">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title expandable">Executed Rules:</h2>
+                    <div class="collapsed">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Rules Fired During Execution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="firedRules : ${businessNames}">
+                                    <td th:text="${firedRules}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title expandable">Rules Not Executed During Tests:</h2>
+                    <div class="collapsed">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Rules Not Fired During Execution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="notfiredRules : ${elementsNotInSet}">
+                                    <td th:text="${notfiredRules}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
+        <!-- If no coverage found -->
+        <th:block th:if="${percentageCovered == null or percentageCovered.isEmpty()}">
+            <p>No coverage found.</p>
+        </th:block>
+
+        <!-- Back button -->
+        <a href="/anotherPage" class="btn btn-primary">Back</a>
+    </div>
+</body>
+</html>
