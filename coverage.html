@@ -38,12 +38,13 @@
             color: #333;
         }
 
-        select {
+        select, input {
             width: 100%;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 3px;
+            margin-bottom: 10px;
         }
 
         button {
@@ -63,8 +64,7 @@
     <div class="container">
         <h1>Rule Coverage Health Check</h1>
         <h2>Generate Rule Coverage Report For:</h2>
-                <form action="/displayResponse" method="get">
-        
+        <form action="/displayResponse" method="get">
             <label for="decisionService">Decision Service:</label>
             <select id="decisionService" name="decisionService">
                 <!-- Add options for decision services here -->
@@ -72,6 +72,13 @@
                 <option value="decisionService2">Decision Service 2</option>
                 <option value="decisionService3">Decision Service 3</option>
             </select>
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
             <button type="submit">Check Rule Coverage</button>
         </form>
     </div>
