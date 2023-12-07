@@ -1,58 +1,51 @@
+public class StringSum {
+    public static int calculateSum(String fname, String lname, String mname, String suffix) {
+        int sum = 0;
 
-JIRA Feature: Decision Artifact Management and Automated Deployment
+        if (fname != null) {
+            sum += parseString(fname);
+        }
 
-Phase 1: Decision Repository Migration and Version Control
+        if (lname != null) {
+            sum += parseString(lname);
+        }
 
-Description:
-As a rule developer, I want to have a centralized repository for decision artifacts, enabling efficient version control and collaboration. This feature aims to migrate existing decisions to the repository and provide essential version control functionalities.
+        if (mname != null) {
+            sum += parseString(mname);
+        }
 
-Sub-tasks:
+        if (suffix != null) {
+            sum += parseString(suffix);
+        }
 
-Decision Migration to Repository:
+        return sum;
+    }
 
-Migrate all existing decision artifacts to the designated repository.
-Ensure a seamless transition with minimal impact on current configurations.
-Commit and Revert Functionality:
+    private static int parseString(String str) {
+        int result = 0;
+        boolean countPlus = false;  // Initialize to false to exclude '+' before the first character
 
-Enable rule developers to commit decision artifacts to the repository.
-Provide the ability to revert changes to a previous version of the decision artifact.
-Checkout Artifacts:
+        for (char c : str.toCharArray()) {
+            if (c == '+') {
+                countPlus = true;  // Set to true for subsequent characters
+            } else {
+                result += countPlus ? 1 : 0;
+                result += Character.getNumericValue(c);
+                countPlus = false;  // Reset countPlus for the next character
+            }
+        }
 
-Allow rule developers to checkout decision artifacts from the repository.
-Ensure that checked out artifacts are editable and can be seamlessly reintegrated into the repository.
-Phase 2: Automated Build and Deployment
+        return result;
+    }
 
-Description:
-To streamline the development workflow, automated build and deployment processes will be implemented. This phase focuses on ensuring that changes made to decision artifacts are automatically built and deployed to rule execution servers.
+    public static void main(String[] args) {
+        // Example usage
+        String fname = "R";
+        String lname = "R";
+        String mname = "R";
+        String suffix = "R";
 
-Sub-tasks:
-
-Automated Build Process:
-
-Implement an automated build process triggered upon committing decision artifacts.
-Ensure that the build process generates deployable artifacts.
-Deployment to Rule Execution Servers:
-
-Facilitate the automatic deployment of built decision artifacts to rule execution servers.
-Verify that deployments do not disrupt ongoing operations on rule execution servers.
-Phase 3: Regression Testing Framework
-
-Description:
-To maintain the quality and reliability of decision artifacts, a regression testing framework will be established. This phase focuses on implementing automated regression tests to validate the functionality and performance of decision artifacts.
-
-Sub-tasks:
-
-Regression Test Suite Creation:
-
-Develop a comprehensive regression test suite covering critical functionalities of decision artifacts.
-Ensure that the test suite is adaptable to evolving decision requirements.
-Integration with Build Pipeline:
-
-Integrate the regression test suite into the automated build pipeline.
-Ensure that regression tests are automatically triggered after each build.
-Acceptance Criteria:
-
-Rule developers can successfully commit, revert, and checkout decision artifacts from the repository.
-Automated build process generates deployable artifacts without errors.
-Decision artifacts are automatically deployed to rule execution servers upon successful builds.
-Regression test suite provides comprehensive coverage and identifies potential issues.
+        int result = calculateSum(fname, lname, mname, suffix);
+        System.out.println("Sum: " + result);
+    }
+}
