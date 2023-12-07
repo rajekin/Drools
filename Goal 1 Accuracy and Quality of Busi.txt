@@ -2,40 +2,27 @@ public class StringSum {
     public static int calculateSum(String fname, String lname, String mname, String suffix) {
         int sum = 0;
 
-        if (fname != null) {
-            sum += parseString(fname);
-        }
-
-        if (lname != null) {
-            sum += parseString(lname);
-        }
-
-        if (mname != null) {
-            sum += parseString(mname);
-        }
-
-        if (suffix != null) {
-            sum += parseString(suffix);
-        }
+        sum += calculateLength(fname, lname);
+        sum += calculateLength(lname, mname);
+        sum += calculateLength(mname, suffix);
+        sum += calculateLength(suffix, null);  // Since there is no next argument after suffix
 
         return sum;
     }
 
-    private static int parseString(String str) {
-        int result = 0;
-        boolean countPlus = false;  // Initialize to false to exclude '+' before the first character
-
-        for (char c : str.toCharArray()) {
-            if (c == '+') {
-                countPlus = true;  // Set to true for subsequent characters
-            } else {
-                result += countPlus ? 1 : 0;
-                result += Character.getNumericValue(c);
-                countPlus = false;  // Reset countPlus for the next character
-            }
+    private static int calculateLength(String str, String nextStr) {
+        if (str == null || str.isEmpty()) {
+            return 0;
         }
 
-        return result;
+        int length = str.length();
+
+        // Add +1 after count of the first argument if the next argument is not null
+        if (nextStr != null) {
+            length++;
+        }
+
+        return length;
     }
 
     public static void main(String[] args) {
@@ -46,6 +33,6 @@ public class StringSum {
         String suffix = "R";
 
         int result = calculateSum(fname, lname, mname, suffix);
-        System.out.println("Sum: " + result);
+        System.out.println("Total sum of lengths: " + result);
     }
 }
