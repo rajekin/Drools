@@ -12,16 +12,19 @@ public class StringSum {
 
     private static int calculateLength(String str, String nextStr) {
         if (str == null || str.isEmpty()) {
+            System.out.println("String is null or empty.");
             return 0;
         }
 
         int length = str.length();
 
         // Add +1 after count of the first argument if the next argument is not null
-        if (nextStr != null && !nextStr.isEmpty()) {
+        if (nextStr != null && !nextStr.isEmpty() && length > 1) {
             length++;
+            System.out.println("Added +1 after the count of the first argument.");
         }
 
+        System.out.println("Length of \"" + str + "\": " + length);
         return length;
     }
 
