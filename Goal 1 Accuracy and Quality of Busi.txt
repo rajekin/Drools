@@ -18,7 +18,7 @@ public class StringSum {
         int length = str.length();
 
         // Add +1 after count of the first argument if the next argument is not null
-        if (nextStr != null) {
+        if (nextStr != null && !nextStr.isEmpty()) {
             length++;
         }
 
@@ -28,8 +28,8 @@ public class StringSum {
     public static void main(String[] args) {
         // Example usage
         String fname = "R";
-        String lname = "R";
-        String mname = "R";
+        String lname = null;
+        String mname = null;
         String suffix = "R";
 
         int result = calculateSum(fname, lname, mname, suffix);
