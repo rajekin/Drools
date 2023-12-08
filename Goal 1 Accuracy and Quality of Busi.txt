@@ -1,49 +1,25 @@
-package com.example.Dashboard;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-public class StringLengthCounter {
+public class StringConcatenator {
     public static void main(String[] args) {
         // Example usage
-        String fname = "";
+        String fname = "John";
         String lname = "";
-        String mname = "";
-        String suffix = "Red";
+        String mname = "Doe";
+        String suffix = "Jr.";
 
-        int count = calculateLengthWithAdjacency(fname, lname, mname, suffix);
+        String result = concatenateWithSpace(fname, lname, mname, suffix);
 
-        System.out.println("Total count: " + count);
+        System.out.println("Concatenated result: " + result);
     }
 
-    public static int calculateLengthWithAdjacency(String... strings) {
+    public static String concatenateWithSpace(String... strings) {
         // Filter out null and empty strings
-        List<String> nonEmptyStrings = Arrays.stream(strings)
+        String concatenatedResult = Arrays.stream(strings)
                 .filter(s -> s != null && !s.isEmpty())
-                .collect(Collectors.toList());
+                .collect(Collectors.joining(" "));
 
-        int count = 0;
-
-        // Calculate length of non-empty strings
-        for (String str : nonEmptyStrings) {
-            count += str.length();
-        }
-
-        // Add 1 for each non-empty adjacent string
-        for (int i = 0; i < nonEmptyStrings.size() - 1; i++) {
-            count++;
-        }
-
-        return count;
+        return concatenatedResult;
     }
 }
-
-
