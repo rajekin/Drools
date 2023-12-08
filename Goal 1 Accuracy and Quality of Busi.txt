@@ -1,41 +1,49 @@
+package com.example.Dashboard;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class StringLengthCounter {
     public static void main(String[] args) {
         // Example usage
-        String fname = "R";
-        String lname = "R";
-        String mname = null;
-        String suffix = "R";
+        String fname = "";
+        String lname = "";
+        String mname = "";
+        String suffix = "Red";
 
-        // Create an ArrayList to store non-null strings
-        List<String> nonNullStrings = new ArrayList<>();
-
-        // Add non-null strings to the list
-        if (fname != null) nonNullStrings.add(fname);
-        if (lname != null) nonNullStrings.add(lname);
-        if (mname != null) nonNullStrings.add(mname);
-        if (suffix != null) nonNullStrings.add(suffix);
-
-        // Convert the list to an array for the method call
-        String[] nonNullArray = nonNullStrings.toArray(new String[0]);
-
-        // Call the method with non-null strings only
-        int count = calculateLengthWithAdjacency(nonNullArray);
+        int count = calculateLengthWithAdjacency(fname, lname, mname, suffix);
 
         System.out.println("Total count: " + count);
     }
 
     public static int calculateLengthWithAdjacency(String... strings) {
+        // Filter out null and empty strings
+        List<String> nonEmptyStrings = Arrays.stream(strings)
+                .filter(s -> s != null && !s.isEmpty())
+                .collect(Collectors.toList());
+
         int count = 0;
 
-        for (String str : strings) {
+        // Calculate length of non-empty strings
+        for (String str : nonEmptyStrings) {
             count += str.length();
         }
 
-        // Add 1 for each non-null adjacent string
-        for (int i = 0; i < strings.length - 1; i++) {
+        // Add 1 for each non-empty adjacent string
+        for (int i = 0; i < nonEmptyStrings.size() - 1; i++) {
             count++;
         }
 
         return count;
     }
 }
+
+
