@@ -1,7 +1,69 @@
-I hope this message finds you well. I am initiating a crucial step to enhance our team collaboration and knowledge sharing: the implementation of bi-weekly code review meetings.
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
-These sessions are designed for the team to collectively review and discuss the developed code. It is imperative for fostering a deeper understanding of our development process and sharing valuable insights.
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
-I am confident in your expertise and coordination skills to ensure the success of these meetings. Kindly prioritize scheduling these bi-weekly sessions and let me know if you need any further details.
+public class JsonXmlComparator {
 
-Looking forward to your prompt action on this matter.
+    public static void main(String[] args) {
+        String folder1Path = "/path/to/folder1";
+        String folder2Path = "/path/to/folder2";
+
+        compareFolders(folder1Path, folder2Path);
+    }
+
+    public static void compareFolders(String folder1Path, String folder2Path) {
+        List<String> fileNamesFolder1 = getFileNames(folder1Path);
+        List<String> fileNamesFolder2 = getFileNames(folder2Path);
+
+        Set<String> allFileNames = new HashSet<>(fileNamesFolder1);
+        allFileNames.addAll(fileNamesFolder2);
+
+        for (String fileName : allFileNames) {
+            File file1 = new File(folder1Path, fileName);
+            File file2 = new File(folder2Path, fileName);
+
+            if (file1.exists() && file2.exists()) {
+                compareFiles(file1, file2);
+            } else {
+                System.out.println("File not found in one of the folders: " + fileName);
+            }
+        }
+    }
+
+    public static void compareFiles(File file1, File file2) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode1 = objectMapper.readTree(file1);
+            JsonNode jsonNode2 = objectMapper.readTree(file2);
+
+            if (!jsonNode1.equals(jsonNode2)) {
+                System.out.println("Differences found in file: " + file1.getName());
+                // Add your logic to handle/report differences
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> getFileNames(String folderPath) {
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+        List<String> fileNames = new ArrayList<>();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    fileNames.add(file.getName());
+                }
+            }
+        }
+
+        return fileNames;
+    }
+}
