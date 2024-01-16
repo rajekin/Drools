@@ -1,69 +1,72 @@
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class JsonXmlComparator {
+public class DynamicFileNameExample {
 
-    public static void main(String[] args) {
-        String folder1Path = "/path/to/folder1";
-        String folder2Path = "/path/to/folder2";
+    public static void main(String[] args) throws IOException {
+        // Create an HttpClient instance
+        HttpClient httpClient = HttpClients.createDefault();
 
-        compareFolders(folder1Path, folder2Path);
-    }
+        // Define the URL of the resource
+        String url = "https://example.com/large-resource";
 
-    public static void compareFolders(String folder1Path, String folder2Path) {
-        List<String> fileNamesFolder1 = getFileNames(folder1Path);
-        List<String> fileNamesFolder2 = getFileNames(folder2Path);
+        // Create an HTTP GET request
+        HttpGet httpGet = new HttpGet(url);
 
-        Set<String> allFileNames = new HashSet<>(fileNamesFolder1);
-        allFileNames.addAll(fileNamesFolder2);
+        // Execute the request and get the response
+        HttpResponse response = httpClient.execute(httpGet);
 
-        for (String fileName : allFileNames) {
-            File file1 = new File(folder1Path, fileName);
-            File file2 = new File(folder2Path, fileName);
+        // Check if the response is successful (status code 200)
+        if (response.getStatusLine().getStatusCode() == 200) {
+            // Get the response entity's input stream
+            InputStream inputStream = response.getEntity().getContent();
 
-            if (file1.exists() && file2.exists()) {
-                compareFiles(file1, file2);
-            } else {
-                System.out.println("File not found in one of the folders: " + fileName);
-            }
+            // Generate a dynamic file name based on the current timestamp
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String fileName = "response_content_" + timestamp + ".txt";
+
+            // Write the response body to the dynamic file
+            File outputFile = new File(fileName);
+            writeInputStreamToFile(inputStream, outputFile);
+
+            // Read from the same file
+            String contentFromFile = readFromFile(outputFile);
+
+            // Process the content as needed
+            System.out.println("Content read from file: " + contentFromFile);
+        } else {
+            // Handle non-successful response (e.g., log an error)
+            System.err.println("HTTP Request failed with status code: " + response.getStatusLine().getStatusCode());
         }
     }
 
-    public static void compareFiles(File file1, File file2) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode1 = objectMapper.readTree(file1);
-            JsonNode jsonNode2 = objectMapper.readTree(file2);
-
-            if (!jsonNode1.equals(jsonNode2)) {
-                System.out.println("Differences found in file: " + file1.getName());
-                // Add your logic to handle/report differences
+    private static void writeInputStreamToFile(InputStream inputStream, File outputFile) throws IOException {
+        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } finally {
+            // Ensure to close the input stream to release resources
+            inputStream.close();
         }
     }
 
-    public static List<String> getFileNames(String folderPath) {
-        File folder = new File(folderPath);
-        File[] files = folder.listFiles();
-        List<String> fileNames = new ArrayList<>();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    fileNames.add(file.getName());
-                }
+    private static String readFromFile(File file) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
             }
+            return stringBuilder.toString();
         }
-
-        return fileNames;
     }
 }
