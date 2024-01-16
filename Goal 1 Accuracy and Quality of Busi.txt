@@ -1,31 +1,26 @@
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DynamicFileNameExample {
+public class RestTemplateExample {
 
     public static void main(String[] args) throws IOException {
-        // Create an HttpClient instance
-        HttpClient httpClient = HttpClients.createDefault();
+        // Create a RestTemplate instance
+        RestTemplate restTemplate = new RestTemplate();
 
         // Define the URL of the resource
         String url = "https://example.com/large-resource";
 
-        // Create an HTTP GET request
-        HttpGet httpGet = new HttpGet(url);
-
-        // Execute the request and get the response
-        HttpResponse response = httpClient.execute(httpGet);
+        // Make an HTTP GET request and get the ResponseEntity
+        ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(url, byte[].class);
 
         // Check if the response is successful (status code 200)
-        if (response.getStatusLine().getStatusCode() == 200) {
-            // Get the response entity's input stream
-            InputStream inputStream = response.getEntity().getContent();
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            // Get the response body as a byte array
+            byte[] responseBody = responseEntity.getBody();
 
             // Generate a dynamic file name based on the current timestamp
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -33,7 +28,7 @@ public class DynamicFileNameExample {
 
             // Write the response body to the dynamic file
             File outputFile = new File(fileName);
-            writeInputStreamToFile(inputStream, outputFile);
+            writeByteArrayToFile(responseBody, outputFile);
 
             // Read from the same file
             String contentFromFile = readFromFile(outputFile);
@@ -42,20 +37,13 @@ public class DynamicFileNameExample {
             System.out.println("Content read from file: " + contentFromFile);
         } else {
             // Handle non-successful response (e.g., log an error)
-            System.err.println("HTTP Request failed with status code: " + response.getStatusLine().getStatusCode());
+            System.err.println("HTTP Request failed with status code: " + responseEntity.getStatusCodeValue());
         }
     }
 
-    private static void writeInputStreamToFile(InputStream inputStream, File outputFile) throws IOException {
+    private static void writeByteArrayToFile(byte[] content, File outputFile) throws IOException {
         try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-        } finally {
-            // Ensure to close the input stream to release resources
-            inputStream.close();
+            outputStream.write(content);
         }
     }
 
