@@ -1,22 +1,126 @@
-In the last quarter, we successfully crafted a comprehensive training schedule designed to enhance the skills and knowledge of our business users in utilizing IBM ODM effectively. The training program is tailored to provide a deep understanding of the platform's functionalities and empower our teams to make the most of its capabilities.
+/*
+ * Copyright 2014 Fannie Mae. All rights reserved. Unpublished.
+ * Rights reserved under the copyright laws of the United States and international
+ * conventions. Use of a copyright notice is precautionary only and does not
+ * imply publication or disclosure. This software contains confidential
+ * information and trade secrets of Fannie Mae. Use, disclosure, or
+ * reproduction is prohibited without the prior written consent of Fannie Mae.
+ */
+package com.fanniemae.lap.enums;
 
-Now, as we move forward into the next phase, I am thrilled to announce that we are gearing up to implement the scheduled training sessions in the near future. These sessions will not only equip our teams with the necessary expertise but also foster a collaborative environment for knowledge sharing and skill development.
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
-Training Implementation Highlights:
+/**
+ * LoanSaleType is an enumeration.
+ */
+public enum LoanSaleType {
+	/**
+	 * a enumerated value for CASH.
+	 */
+	CASH ("1", "Cash"),
+		
+	/**
+	 * a enumerated value for LTSC.
+	 */
+	LTSC ("2", "LTSC"),
+		
+	/**
+	 * a enumerated value for PFP.
+	 */
+	PFP ("3", "PFP"),
+		
+	/**
+	 * a enumerated value for SWAP.
+	 */
+	SWAP ("4", "SWAP"),
+		
+	/**
+	 * a enumerated value for WL_REMIC.
+	 */
+	WL_REMIC ("5", "WL REMIC"),
+		
+	/**
+	 * a enumerated value for NULL_VALUE.
+	 */
+	NULL_VALUE (null, "Null");		
+		
+	/**
+	 * the code of the LoanSaleType.
+	 */
+	private String code;
+	
+	/**
+	 * the description of the LoanSaleType.
+	 */
+	private String description;
+	
+	/**
+	 * the ENUMTYPE_LOOKUP map.
+	 */
+	private static final Map<String, LoanSaleType> ENUMTYPE_LOOKUP = 
+			new HashMap<String, LoanSaleType>();
 
-Targeted Curriculum:
+	/**
+	 * do this once per class load.
+	 */
+	static {
+		for (LoanSaleType s : EnumSet.allOf(LoanSaleType.class)) {
+			ENUMTYPE_LOOKUP.put(s.getCode(), s);
+		}
+	}
 
-Our training curriculum is carefully curated to address key aspects of IBM ODM, ensuring a comprehensive understanding of its features and functionalities.
-Engaging Sessions:
+	/** 
+	 * constructor that creates an enumeration matching the passed name.
+	 * 
+	 * @param aCode construct an enumeration with the passed typeCode and 
+	 * @param aDescription passed typeValue
+	 */
+	LoanSaleType(final String aCode, final String aDescription) {
+		this.code = aCode;
+		this.description = aDescription;
+	}
+	
+	/**
+	 * 
+	 * @return the Code for the enumeration is returned.
+	 */
+	public String getCode() {
+		return this.code;
+	}
+	
+	/**
+	 * 
+	 * @return the Description for the enumeration is returned.
+	 */
+	public String getDescription() {
+		return this.description;
+	}
 
-The training sessions will be interactive and engaging, providing hands-on experiences to facilitate effective learning and skill acquisition.
-Expert Facilitators:
+	/**
+	 * returns a LoanSaleType whose name matches the passed key.
+	 * 
+	 * @param aCode the typeCode of the enumeration to look up
+	 * @return the LoanSaleType enumeration corresponding to the passed key
+	 */
+	public static LoanSaleType get(final String aCode) {	
+		LoanSaleType value = ENUMTYPE_LOOKUP.get(aCode);
+		if(value == null) {
+			value = LoanSaleType.NULL_VALUE;
+		}
+		return value;
+		
+	}
 
-We have enlisted experienced facilitators who are well-versed in IBM ODM, ensuring that participants receive guidance from industry experts.
-Q&A and Collaboration:
-
-Each session will include dedicated time for questions and discussions, encouraging collaboration and knowledge exchange among participants.
-Next Steps:
-
-
-
+	/**
+	 * convert internal state to a printable string. 
+	 * note: make sure to always return a code.
+	 * 
+	 * @return returns the internal state converted into a printable string
+	 */
+	@Override
+	public String toString() {
+		return this.getCode();
+	}
+}
