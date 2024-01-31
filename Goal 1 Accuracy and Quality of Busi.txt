@@ -1,26 +1,23 @@
-
 import java.util.Arrays;
 
-public class ArrayUtil {
+public class ArrayObjectUtil {
 
-    public static void iterateNonNullNonEmptyArray(String[] array) {
+    public static boolean hasHolidaysGreaterThanZero(MyObject[] array) {
         // Check if array is not null and not empty
         if (array != null && array.length > 0) {
-            // Iterate over the elements using Java 8 forEach loop
-            Arrays.stream(array)
-                  .filter(element -> element != null) // Filter out null elements if any
-                  .forEach(element -> {
-                      // Perform whatever operation you need with each element
-                      System.out.println("Element: " + element);
-                  });
+            // Iterate over the objects using Java 8 stream
+            return Arrays.stream(array)
+                  .anyMatch(obj -> obj != null && obj.getHolidays() > 0);
         } else {
-            System.out.println("Array is null or empty.");
+            // Array is null or empty
+            return false;
         }
     }
 
     public static void main(String[] args) {
         // Example usage:
-        String[] myArray = {"apple", "banana", null, "orange"};
-        iterateNonNullNonEmptyArray(myArray);
+        MyObject[] objects = {new MyObject(0), new MyObject(3), new MyObject(-1)};
+        boolean result = hasHolidaysGreaterThanZero(objects);
+        System.out.println("Any object with holidays greater than 0? " + result);
     }
 }
