@@ -1,1 +1,26 @@
 
+import java.util.Arrays;
+
+public class ArrayUtil {
+
+    public static void iterateNonNullNonEmptyArray(String[] array) {
+        // Check if array is not null and not empty
+        if (array != null && array.length > 0) {
+            // Iterate over the elements using Java 8 forEach loop
+            Arrays.stream(array)
+                  .filter(element -> element != null) // Filter out null elements if any
+                  .forEach(element -> {
+                      // Perform whatever operation you need with each element
+                      System.out.println("Element: " + element);
+                  });
+        } else {
+            System.out.println("Array is null or empty.");
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example usage:
+        String[] myArray = {"apple", "banana", null, "orange"};
+        iterateNonNullNonEmptyArray(myArray);
+    }
+}
