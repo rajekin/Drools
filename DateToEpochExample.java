@@ -1,25 +1,22 @@
-package com.example.Dashboard;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import java.util.Date;
 
-public class DateToEpochExample {
-    public static void main(String[] args) throws ParseException {
-        // Given date string without a timestamp
-        String dateString = "2023-10-20";
+public class DateHourDifferenceTest {
 
-        // Concatenate a default time (e.g., midnight)
-        dateString += " 00:00:00";
-
-        // Create a SimpleDateFormat object to parse the date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        // Parse the date string to a Date object
-        Date date = dateFormat.parse(dateString);
-
-        // Get the epoch timestamp in milliseconds
-        long epochTimestamp = date.getTime();
-
-        System.out.println("Epoch Timestamp for " + dateString + ": " + epochTimestamp);
+    @Test
+    public void testGetHoursDifference() {
+        // Create a Date object representing the passed-in date (including timezone)
+        Date passedInDate = new Date(1634794800000L); // Example: 2021-10-21T12:00:00Z
+        
+        // Calculate the expected hours difference (assuming the current date/time is 2024-02-17T14:30:00Z)
+        // You should adjust this according to your testing environment
+        long expectedHoursDifference = 34336; // Example: 34336 hours between the two dates
+        
+        // Call the method to get the actual hours difference
+        long actualHoursDifference = DateHourDifference.getHoursDifference(passedInDate);
+        
+        // Assert that the actual hours difference matches the expected hours difference
+        assertEquals(expectedHoursDifference, actualHoursDifference);
     }
 }
