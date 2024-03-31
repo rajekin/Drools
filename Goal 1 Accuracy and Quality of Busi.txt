@@ -1,24 +1,89 @@
-List<C> cList = memberList.stream()
-                .map(member -> {
-                    C c = new C();
-                    c.setName(member.getName());
-                    c.setAge(member.getAge());
+import java.util.List;
+import java.util.stream.Collectors;
+
+class C {
+    private String name;
+    private int age;
+    private boolean isPrimary;
+
+    // Constructor
+    public C(String name, int age, boolean isPrimary) {
+        this.name = name;
+        this.age = age;
+        this.isPrimary = isPrimary;
+    }
+
+    // Getters and setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isPrimary() {
+        return isPrimary;
+    }
+
+    public void setPrimary(boolean primary) {
+        isPrimary = primary;
+    }
+
+    @Override
+    public String toString() {
+        return "C{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", isPrimary=" + isPrimary +
+                '}';
+    }
+}
+
+public class Main {
+    public static List<C> removeAndUpdate(List<C> listC, List<C> listD) {
+        List<String> namesToRemove = listD.stream()
+                .map(C::getName)
+                .collect(Collectors.toList());
+
+        return listC.stream()
+                .filter(c -> !namesToRemove.contains(c.getName()))
+                .map(c -> {
+                    if (c.isPrimary()) {
+                        // Update age if isPrimary is true
+                        c.setAge(c.getAge() + 1);
+                    }
                     return c;
                 })
                 .collect(Collectors.toList());
-
-        if (member2List != null && !member2List.isEmpty()) {
-            List<C> cListFromSecondList = member2List.stream()
-                    .map(member -> {
-                        C c = new C();
-                        c.setName(member.getName());
-                        c.setAge(member.getAge());
-                        return c;
-                    })
-                    .collect(Collectors.toList());
-
-            cList.addAll(cListFromSecondList);
-        }
-
-        return cList;
     }
+
+    public static void main(String[] args) {
+        // Sample data
+        List<C> listC = List.of(
+                new C("A", 20, false),
+                new C("B", 25, true),
+                new C("C", 30, false),
+                new C("D", 35, true)
+        );
+
+        List<C> listD = List.of(
+                new C("C", 0, false), // Only name is considered
+                new C("D", 0, false)
+        );
+
+        // Remove entries with names from listD and update age if isPrimary is true
+        List<C> updatedListC = removeAndUpdate(listC, listD);
+
+        // Print the updated list
+        updatedListC.forEach(System.out::println);
+    }
+}
