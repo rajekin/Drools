@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,14 +69,14 @@ public class Main {
 
     public static void main(String[] args) {
         // Sample data
-        List<C> listC = List.of(
+        List<C> listC = Arrays.asList(
                 new C("A", 20, false),
                 new C("B", 25, true),
                 new C("C", 30, false),
                 new C("D", 35, true)
         );
 
-        List<C> listD = List.of(
+        List<C> listD = Arrays.asList(
                 new C("C", 0, false), // Only name is considered
                 new C("D", 0, false)
         );
