@@ -1,20 +1,28 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.io.IOException;
 
-public class JSONReader {
+public class JSONToJavaUsingJAXB {
     public static void main(String[] args) {
-        ObjectMapper mapper = new ObjectMapper();
-        File jsonFile = new File("data.json"); // Replace "data.json" with your JSON file path
-        
         try {
-            // Read JSON from file and map it to a Java object
-            YourObject yourObject = mapper.readValue(jsonFile, YourObject.class);
-            
-            // Now you have your Java object (YourObject) containing the data from the JSON file
-            // Handle the Java object as needed
-            System.out.println("Object created from JSON: " + yourObject.toString());
-        } catch (IOException e) {
+            // Convert JSON to XML using Jackson
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonFactory jsonFactory = new JsonFactory();
+            JsonParser jsonParser = jsonFactory.createParser(new File("data.json")); // Replace "data.json" with your JSON file path
+            ObjectMapper xmlMapper = new XmlMapper();
+            Object jsonObject = objectMapper.readValue(jsonParser, Object.class);
+            String xmlData = xmlMapper.writeValueAsString(jsonObject);
+
+            // Unmarshal XML to Java objects using JAXB
+            JAXBContext jaxbContext = JAXBContext.newInstance(YourRootClass.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            YourRootClass rootObject = (YourRootClass) unmarshaller.unmarshal(new StringReader(xmlData));
+
+            // Now you have your Java objects in 'rootObject'
+            // Handle the Java objects as needed
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
