@@ -1,28 +1,30 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
-public class JSONToJavaUsingJAXB {
+public class JSONToJavaUsingGson {
     public static void main(String[] args) {
         try {
-            // Convert JSON to XML using Jackson
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonFactory jsonFactory = new JsonFactory();
-            JsonParser jsonParser = jsonFactory.createParser(new File("data.json")); // Replace "data.json" with your JSON file path
-            ObjectMapper xmlMapper = new XmlMapper();
-            Object jsonObject = objectMapper.readValue(jsonParser, Object.class);
-            String xmlData = xmlMapper.writeValueAsString(jsonObject);
+            // Read JSON from file
+            BufferedReader reader = new BufferedReader(new FileReader("data.json")); // Replace "data.json" with your JSON file path
+            StringBuilder jsonBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+            reader.close();
 
-            // Unmarshal XML to Java objects using JAXB
-            JAXBContext jaxbContext = JAXBContext.newInstance(YourRootClass.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            YourRootClass rootObject = (YourRootClass) unmarshaller.unmarshal(new StringReader(xmlData));
+            String jsonData = jsonBuilder.toString();
 
-            // Now you have your Java objects in 'rootObject'
-            // Handle the Java objects as needed
-        } catch (Exception e) {
+            // Convert JSON to Java object using Gson
+            Gson gson = new Gson();
+            YourObject yourObject = gson.fromJson(jsonData, YourObject.class);
+
+            // Now you have your Java object (YourObject) containing the data from the JSON file
+            // Handle the Java object as needed
+            System.out.println("Object created from JSON: " + yourObject.toString());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
