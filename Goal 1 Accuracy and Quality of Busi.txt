@@ -1,31 +1,16 @@
-import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+Unable to Remove Standard Rule Project Dependency from Decision Service in Decision Center
 
-public class JSONToJavaUsingGson {
-    public static void main(String[] args) {
-        try {
-            // Read JSON from file
-            BufferedReader reader = new BufferedReader(new FileReader("data.json")); // Replace "data.json" with your JSON file path
-            StringBuilder jsonBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonBuilder.append(line);
-            }
-            reader.close();
+Description:
 
-            String jsonData = jsonBuilder.toString();
+I am encountering an issue with cleaning up a standard rule project dependency from a decision service in IBM Operational Decision Manager (ODM) Decision Center.
 
-            // Convert JSON to Java object using Gson
-            Gson gson = new Gson();
-            YourObject yourObject = gson.fromJson(jsonData, YourObject.class);
+Issue Overview:
 
-            // Now you have your Java object (YourObject) containing the data from the JSON file
-            // Handle the Java object as needed
-            System.out.println("Object created from JSON: " + yourObject.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+Scenario: I have a standard rule project that is referenced by a decision service in IBM ODM.
+Deployment Issue: When the standard rule project is deployed to the Decision Center (DC), it becomes visible as a dependency.
+Cleanup Problem: However, when the parent rule project is deleted, the standard rule project is not cleaned up and remains as a dependency.
+Sync Error: Upon attempting to sync the decision service to DC again, I receive an error stating "the project with the same name already exists," indicating that the previous dependency was not properly removed.
+Missing Delete Option: Additionally, the delete option for the standard rule project is not visible in the Team Server.
+Requested Action:
+
+I would like assistance in resolving this issue and cleaning up the standard rule project dependency from the decision service in the Decision Center. Please provide guidance on how to properly remove the dependency or address any underlying issues preventing its removal.
