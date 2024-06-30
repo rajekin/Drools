@@ -1,33 +1,22 @@
-package com.tlp.rating;
+public enum FundingSource {
+    EXTERNAL_FUNDING_SOURCE_NON_CC("External Funding Source NON CC"),
+    EXTERNAL_FUNDING_SOURCE_CC("External Funding Source CC"),
+    NOT_A_FUNDING_SOURCE("Not a Funding Source"),
+    INTERNAL_FUNDING_SOURCE_CC("Internal Funding Source CC"),
+    INTERNAL_FUNDING_SOURCE_NON_CC("Internal Funding Source NON CC");
 
-public enum ConstructionType {
-    BRICK("BRICK"),
-    STICKS("STICKS"),
-    STRAW("STRAW");
+    private final String description;
 
-    private final String code;
-
-    ConstructionType(String code) {
-        this.code = code;
+    FundingSource(String description) {
+        this.description = description;
     }
 
-    public String getCode() {
-        return code;
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Get enum instance by code, ignoring case.
-     *
-     * @param input The input code to search for.
-     * @return The matching enum instance or null if none found.
-     */
-    public static ConstructionType getByCode(String input) {
-        for (ConstructionType type : ConstructionType.values()) {
-            if (type.code.equalsIgnoreCase(input)) {
-                return type;
-            }
-        }
-        return null; // No match found
+    @Override
+    public String toString() {
+        return description;
     }
 }
-
