@@ -1,22 +1,36 @@
-public enum FundingSource {
-    EXTERNAL_FUNDING_SOURCE_NON_CC("External Funding Source NON CC"),
-    EXTERNAL_FUNDING_SOURCE_CC("External Funding Source CC"),
-    NOT_A_FUNDING_SOURCE("Not a Funding Source"),
-    INTERNAL_FUNDING_SOURCE_CC("Internal Funding Source CC"),
-    INTERNAL_FUNDING_SOURCE_NON_CC("Internal Funding Source NON CC");
+import java.math.BigDecimal;
 
-    private final String description;
+public class BigDecimalChecker {
 
-    FundingSource(String description) {
-        this.description = description;
+    public static boolean containsSpecificBigDecimal(String str, BigDecimal specificBigDecimal) {
+        // Check if the string contains the $ sign
+        int dollarIndex = str.indexOf('$');
+        if (dollarIndex == -1) {
+            // $ sign not found, ignore comparison
+            return false;
+        }
+
+        // Extract the substring after the $ sign
+        String numericPart = str.substring(dollarIndex + 1);
+        
+        // Remove all non-numeric characters except for the decimal point and minus sign
+        String cleanedNumericPart = numericPart.replaceAll("[^\\d.-]", "");
+
+        try {
+            // Convert the cleaned string to a BigDecimal
+            BigDecimal bd = new BigDecimal(cleanedNumericPart);
+            // Compare it with the specific BigDecimal
+            return bd.equals(specificBigDecimal);
+        } catch (NumberFormatException e) {
+            // If conversion fails, return false
+            return false;
+        }
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public String toString() {
-        return description;
+    public static void main(String[] args) {
+        String input = "rr $123.45";
+        BigDecimal specificBigDecimal = new BigDecimal("123.45");
+        boolean result = containsSpecificBigDecimal(input, specificBigDecimal);
+        System.out.println("Does the string contain the specific BigDecimal? " + result);
     }
 }
