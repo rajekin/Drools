@@ -1,8 +1,14 @@
-public EligFundingAccount findAccountBySource(List<EligFundingAccount> accounts, String fundingSource) {
-        for (EligFundingAccount account : accounts) {
-            if (account.getFundingSource().equals(fundingSource)) {
-                return account;
+public List<Product> removeProductByIdAndName(List<Product> products, int id, String name) {
+        List<Product> removedProducts = new ArrayList<>();
+        Iterator<Product> iterator = products.iterator();
+        
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getId() == id && product.getName().equals(name)) {
+                removedProducts.add(product);
+                iterator.remove();
             }
         }
-        return null; // Return null if no matching account is found
+
+        return removedProducts;
     }
