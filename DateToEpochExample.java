@@ -1,36 +1,50 @@
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class BigDecimalChecker {
+public class ProductService {
 
-    public static boolean containsSpecificBigDecimal(String str, BigDecimal specificBigDecimal) {
-        // Check if the string contains the $ sign
-        int dollarIndex = str.indexOf('$');
-        if (dollarIndex == -1) {
-            // $ sign not found, ignore comparison
-            return false;
-        }
+    public void filterAndUpdateProducts(List<Product> products, String type, String name, String fundingSource, BigDecimal newMaxAmount, BigDecimal newMinAmount) {
+        for (Product product : products) {
+            if (product.getType().equals(type) && product.getName().equals(name)) {
+                List<EligFundingAccount> updatedFundingAccounts = product.getEligFundingAccounts().stream()
+                        .filter(account -> account.getFundingSource().equals(fundingSource))
+                        .peek(account -> {
+                            account.setMaxAmount(newMaxAmount);
+                            account.setMinAmount(newMinAmount);
+                        })
+                        .collect(Collectors.toList());
 
-        // Extract the substring after the $ sign
-        String numericPart = str.substring(dollarIndex + 1);
-        
-        // Remove all non-numeric characters except for the decimal point and minus sign
-        String cleanedNumericPart = numericPart.replaceAll("[^\\d.-]", "");
-
-        try {
-            // Convert the cleaned string to a BigDecimal
-            BigDecimal bd = new BigDecimal(cleanedNumericPart);
-            // Compare it with the specific BigDecimal
-            return bd.equals(specificBigDecimal);
-        } catch (NumberFormatException e) {
-            // If conversion fails, return false
-            return false;
+                product.setEligFundingAccounts(updatedFundingAccounts);
+            }
         }
     }
 
     public static void main(String[] args) {
-        String input = "rr $123.45";
-        BigDecimal specificBigDecimal = new BigDecimal("123.45");
-        boolean result = containsSpecificBigDecimal(input, specificBigDecimal);
-        System.out.println("Does the string contain the specific BigDecimal? " + result);
+        // Sample data for testing
+        List<EligFundingAccount> fundingAccounts = List.of(
+            new EligFundingAccount("source1", new BigDecimal("1000"), new BigDecimal("500")),
+            new EligFundingAccount("source2", new BigDecimal("2000"), new BigDecimal("1000"))
+        );
+
+        List<Product> products = List.of(
+            new Product(1, "type1", "name1", fundingAccounts),
+            new Product(2, "type2", "name2", fundingAccounts)
+        );
+
+        ProductService productService = new ProductService();
+        productService.filterAndUpdateProducts(products, "type1", "name1", "source1", new BigDecimal("1500"), new BigDecimal("700"));
+
+        // Print updated products for verification
+        for (Product product : products) {
+            System.out.println("Product ID: " + product.getId());
+            System.out.println("Product Type: " + product.getType());
+            System.out.println("Product Name: " + product.getName());
+            for (EligFundingAccount account : product.getEligFundingAccounts()) {
+                System.out.println("Funding Source: " + account.getFundingSource());
+                System.out.println("Max Amount: " + account.getMaxAmount());
+                System.out.println("Min Amount: " + account.getMinAmount());
+            }
+        }
     }
 }
