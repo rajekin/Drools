@@ -3,6 +3,7 @@ package com.example.decisioncenternotifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -18,12 +19,21 @@ public class ScheduledTask {
     @Scheduled(fixedRate = 60000) // Check every 60 seconds
     public void checkForNewServices() throws Exception {
         DecisionServiceResponse response = decisionCenterService.getDecisionServices();
+        Set<String> currentServiceNames = extractServiceNames(response);
         Set<String> newServices = decisionCenterService.processDecisionServices(response);
 
         if (!newServices.isEmpty()) {
-            String emailContent = buildEmailContent(response.getElements(), newServices);
+            String emailContent = buildEmailContent(currentServiceNames, newServices);
             emailService.sendEmail("recipient@example.com", "New Decision Services Added", emailContent);
         }
+    }
+
+    private Set<String> extractServiceNames(DecisionServiceResponse response) {
+        Set<String> serviceNames = new HashSet<>();
+        for (DecisionServiceResponse.ServiceElement element : response.getElements()) {
+            serviceNames.add(element.getName());
+        }
+        return serviceNames;
     }
 
     private String buildEmailContent(Set<String> existingServices, Set<String> newServices) {
@@ -47,3 +57,4 @@ public class ScheduledTask {
         return emailContent.toString();
     }
 }
+
