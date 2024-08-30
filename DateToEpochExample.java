@@ -21,13 +21,29 @@ public class ScheduledTask {
         Set<String> newServices = decisionCenterService.processDecisionServices(response);
 
         if (!newServices.isEmpty()) {
-            StringBuilder emailContent = new StringBuilder("New services have been added:\n");
-            for (String newService : newServices) {
-                emailContent.append(newService).append("\n");
-            }
-
-            // Assuming emailService has a method to send an email
-            emailService.sendEmail("recipient@example.com", "New Decision Services Added", emailContent.toString());
+            String emailContent = buildEmailContent(response.getElements(), newServices);
+            emailService.sendEmail("recipient@example.com", "New Decision Services Added", emailContent);
         }
+    }
+
+    private String buildEmailContent(Set<String> existingServices, Set<String> newServices) {
+        StringBuilder emailContent = new StringBuilder();
+
+        emailContent.append("<h3>New Decision Services Added</h3>");
+        emailContent.append("<table border='1' cellpadding='5' cellspacing='0'>");
+        emailContent.append("<tr><th>Service Name</th><th>Status</th></tr>");
+
+        // Add existing services
+        for (String service : existingServices) {
+            emailContent.append("<tr><td>").append(service).append("</td><td>Existing</td></tr>");
+        }
+
+        // Add new services
+        for (String newService : newServices) {
+            emailContent.append("<tr><td>").append(newService).append("</td><td>New</td></tr>");
+        }
+
+        emailContent.append("</table>");
+        return emailContent.toString();
     }
 }
