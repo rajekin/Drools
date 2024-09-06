@@ -1,66 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+Welcome and Introduction – (5 minutes)
 
-class Item {
-    private int code;
-    private String name;
+Brief welcome and introduction to the session.
+Overview of the importance of API testing for business users.
+Understanding APIs: The Basics – (10 minutes)
 
-    public Item(int code, String name) {
-        this.code = code;
-        this.name = name;
-    }
+What is an API?
+Key concepts: request/response, endpoints, and status codes.
+Overview of HTTP Methods – (15 minutes)
 
-    public int getCode() {
-        return code;
-    }
+GET: Retrieving data.
+POST: Submitting new data.
+PUT: Updating existing data.
+DELETE: Removing data.
+PATCH: Partial updates to data.
+Practical Example Using Postman – (20 minutes)
 
-    public String getName() {
-        return name;
-    }
+Introduction to Postman.
+Setting up and making a GET request.
+Performing a POST request to submit data.
+Using PUT and DELETE requests for updates and removals.
+Hands-on Exercise – (15 minutes)
 
-    @Override
-    public String toString() {
-        return "Item{code=" + code + ", name='" + name + "'}";
-    }
-}
+Users perform a simple GET request using Postman.
+Additional hands-on practice with PUT and POST requests.
+Q&A Session – (10 minutes)
 
-public class SequentialItems {
+Open floor for questions and clarifications.
+Wrap-up and Next Steps – (5 minutes)
 
-    public static List<Item> filterAndSequenceItems(List<Item> items) {
-        // Filter out items with code > 3
-        List<Item> filteredItems = items.stream()
-                                        .filter(item -> item.getCode() <= 3)
-                                        .collect(Collectors.toList());
-
-        // Sort the filtered list by code
-        filteredItems.sort((item1, item2) -> Integer.compare(item1.getCode(), item2.getCode()));
-
-        // Find the minimum code after filtering
-        int minCode = filteredItems.stream().mapToInt(Item::getCode).min().orElse(1);
-
-        // Create a new list with sequential codes starting from the minimum code
-        List<Item> sequentialItems = new ArrayList<>();
-        int sequentialCode = minCode;
-
-        for (Item item : filteredItems) {
-            sequentialItems.add(new Item(sequentialCode++, item.getName()));
-        }
-
-        return sequentialItems;
-    }
-
-    public static void main(String[] args) {
-        List<Item> items = new ArrayList<>();
-        items.add(new Item(5, "Item E"));
-        items.add(new Item(2, "Item B"));
-        items.add(new Item(3, "Item C"));
-        items.add(new Item(10, "Item J"));
-        items.add(new Item(1, "Item A"));
-
-        List<Item> sequentialItems = filterAndSequenceItems(items);
-
-        // Print the filtered and sequential list
-        sequentialItems.forEach(System.out::println);
-    }
-}
+Recap of key takeaways.
+Introduction to more advanced topics for future sessions (e.g., API automation, testing tools).
+Provide resources for further learning.
