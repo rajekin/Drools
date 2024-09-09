@@ -1,33 +1,19 @@
-Welcome and Introduction – (5 minutes)
+import java.util.List;
+import java.util.Optional;
 
-Brief welcome and introduction to the session.
-Overview of the importance of API testing for business users.
-Understanding APIs: The Basics – (10 minutes)
+public class Main {
+    public static void main(String[] args) {
+        List<RateType> rateTypes = // initialize your list;
 
-What is an API?
-Key concepts: request/response, endpoints, and status codes.
-Overview of HTTP Methods – (15 minutes)
+        Optional<RateType> result = rateTypes.stream()
+            .filter(rateType -> "ACTIVE".equals(rateType.getType()))
+            .filter(rateType -> "a".equals(rateType.getDisplayName()))
+            .filter(rateType -> rateType.getOrder() == 1)
+            .findFirst();
 
-GET: Retrieving data.
-POST: Submitting new data.
-PUT: Updating existing data.
-DELETE: Removing data.
-PATCH: Partial updates to data.
-Practical Example Using Postman – (20 minutes)
-
-Introduction to Postman.
-Setting up and making a GET request.
-Performing a POST request to submit data.
-Using PUT and DELETE requests for updates and removals.
-Hands-on Exercise – (15 minutes)
-
-Users perform a simple GET request using Postman.
-Additional hands-on practice with PUT and POST requests.
-Q&A Session – (10 minutes)
-
-Open floor for questions and clarifications.
-Wrap-up and Next Steps – (5 minutes)
-
-Recap of key takeaways.
-Introduction to more advanced topics for future sessions (e.g., API automation, testing tools).
-Provide resources for further learning.
+        result.ifPresent(rateType -> {
+            // Do something with the result
+            System.out.println("Found RateType: " + rateType);
+        });
+    }
+}
