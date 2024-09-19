@@ -7,6 +7,15 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try {
+            // Define the base path to the resources folder
+            String basePath = "src/main/resources/request";
+            
+            // Ensure the directory exists
+            File directory = new File(basePath);
+            if (!directory.exists()) {
+                directory.mkdirs();  // Create the request folder if it doesn't exist
+            }
+            
             // Create example objects
             List<MyClass> objects = List.of(
                 new MyClass("Alice", 25),
@@ -23,16 +32,16 @@ public class Main {
                 String timestamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
                 
                 // Create the file name with the timestamp
-                String fileName = "req_" + timestamp + ".json"; 
+                String fileName = basePath + "/req_" + timestamp + ".json"; 
                 
-                // Convert the object to JSON and write to a file
+                // Convert the object to JSON and write to the file in src/main/resources/request
                 objectMapper.writeValue(new File(fileName), object);
                 
-                // Wait for a small interval to ensure unique timestamps (optional)
+                // Optional: Wait for a small interval to ensure unique timestamps
                 Thread.sleep(1);
             }
             
-            System.out.println("JSON files created with timestamp-based filenames.");
+            System.out.println("JSON files created in src/main/resources/request folder.");
         } catch (Exception e) {
             e.printStackTrace();
         }
