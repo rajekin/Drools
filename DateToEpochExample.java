@@ -1,20 +1,10 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
+Increase Transparency in Decision-Making: Sharing more context or reasoning behind decisions could help the team feel more connected to the objectives and trust the process.
 
-public class JsonFileToObjectExample {
-    public static void main(String[] args) {
-        // Specify the path to the JSON file
-        File file = new File("data.json");
+    Enhance Time and Project Management: If applicable, implementing more structured project timelines or clearer prioritization could help the team meet deadlines more effectively and manage busy periods with less stress.
 
-        ObjectMapper objectMapper = new ObjectMapper();
+    Prioritize Professional Development: Supporting the team’s skill-building or career growth, through training or mentorship, could increase both engagement and individual contributions to team goals.
 
-        try {
-            // Convert JSON file to Java object
-            Person person = objectMapper.readValue(file, Person.class);
-            System.out.println(person); // Outputs: Person{name='John Doe', age=30, email='john.doe@example.com'}
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+
+    Supportive and Approachable: Dave is consistently accessible and approachable, which makes it easy for team members to seek guidance and feel comfortable discussing challenges. This openness contributes to a positive work environment.
+
+    Encourages Collaboration: By fostering a collaborative environment, Dave enables team members to share knowledge, support each other, and work together toward common goals.
