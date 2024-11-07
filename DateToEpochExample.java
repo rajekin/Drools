@@ -1,11 +1,5 @@
-Escalation: Uncommunicated DAX ASG Cleanup Impacting Team Productivity
+On Tuesday evening, we deployed updates to the Eligible Funding Account in the Test RES environment to resolve a defect raised by the DAX business team. However, the DAX team informed us shortly after that they were still experiencing the same issue. Given my admin access at the time, I was able to investigate and identified that the runtime pods were not loading the newly deployed RuleApp, even though it was of the same version. I shared this update with Aisha and the team in our BRMS channel.
 
-Hi [Manager’s Name],
+A few hours later, I discovered that my admin privileges had been removed, and some team members also lost their access to the Review and Test RES environments. We immediately raised an incident ticket, and I worked with Jeremy from the DAX team to understand the root of the access issue. During this call, we discovered that our access group memberships were incorrect.
 
-I’m reaching out to escalate an issue we encountered today regarding an uncommunicated cleanup of the DAX ASG conducted by Nate. This cleanup resulted in several users losing access, while others experienced unexpected changes to their permissions. Due to these access issues, our team faced significant disruptions, losing an entire day of productivity as we worked to identify the affected users and coordinate necessary actions to restore access.
-
-This situation underscores the importance of prior communication when conducting access management changes, as it enables us to prepare and mitigate any potential disruptions. I recommend setting up a process for more consistent communication around such changes in the future to prevent similar incidents.
-
-Please let me know if you’d like more details or if I should take any further steps on this matter.
-
-Thank you for your attention to this.
+Yesterday at the close of business, Nate informed the team via Slack that he had removed certain "toxic" pairs from the lower region. This change was made without prior communication to the team or the DAX business group. Additionally, there was no indication of managerial approval for these adjustments. Following this cleanup, the team was informed that our SDLC process would shift to using the MPS RES as the development server, which came as an unexpected requirement. The lack of communication and sudden alteration of our process led to significant disruption within the team and confusion around our deployment process.
