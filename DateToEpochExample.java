@@ -11,4 +11,4 @@ List<DepositRecomVO> depositList = new ArrayList<>(Arrays.asList(tgtDepositVO));
 depositList.removeIf(Objects::isNull);
 
 // Convert back to array if needed
-tgtDepositVO = depositList.toArray(new DepositRecomVO[0]);
+tgtDepositVO = depositList.toArray(new DepositRecomVO[depositList.size()]);
