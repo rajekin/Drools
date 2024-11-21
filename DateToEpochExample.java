@@ -1,5 +1,14 @@
-On Tuesday evening, we deployed updates to the Eligible Funding Account in the Test RES environment to resolve a defect raised by the DAX business team. However, the DAX team informed us shortly after that they were still experiencing the same issue. Given my admin access at the time, I was able to investigate and identified that the runtime pods were not loading the newly deployed RuleApp, even though it was of the same version. I shared this update with Aisha and the team in our BRMS channel.
+// Import necessary utilities if not already imported
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.List;
 
-A few hours later, I discovered that my admin privileges had been removed, and some team members also lost their access to the Review and Test RES environments. We immediately raised an incident ticket, and I worked with Jeremy from the DAX team to understand the root of the access issue. During this call, we discovered that our access group memberships were incorrect.
+// Assuming tgtDepositVO is an array
+List<DepositRecomVO> depositList = new ArrayList<>(Arrays.asList(tgtDepositVO));
 
-Yesterday at the close of business, Nate informed the team via Slack that he had removed certain "toxic" pairs from the lower region. This change was made without prior communication to the team or the DAX business group. Additionally, there was no indication of managerial approval for these adjustments. Following this cleanup, the team was informed that our SDLC process would shift to using the MPS RES as the development server, which came as an unexpected requirement. The lack of communication and sudden alteration of our process led to significant disruption within the team and confusion around our deployment process.
+// Remove null elements
+depositList.removeIf(Objects::isNull);
+
+// Convert back to array if needed
+tgtDepositVO = depositList.toArray(new DepositRecomVO[0]);
