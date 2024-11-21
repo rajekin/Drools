@@ -1,14 +1,32 @@
-// Import necessary utilities if not already imported
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.List;
+// Initialize an array (example with nulls)
+DepositRecomVO[] tgtDepositVO = new DepositRecomVO[4];
+tgtDepositVO[0] = new DepositRecomVO();
+tgtDepositVO[1] = null;
+tgtDepositVO[2] = new DepositRecomVO();
+tgtDepositVO[3] = null;
 
-// Assuming tgtDepositVO is an array
-List<DepositRecomVO> depositList = new ArrayList<>(Arrays.asList(tgtDepositVO));
+// Count non-null elements
+int count = 0;
+for (DepositRecomVO vo : tgtDepositVO) {
+    if (vo != null) {
+        count++;
+    }
+}
 
-// Remove null elements
-depositList.removeIf(Objects::isNull);
+// Create a new array for non-null elements
+DepositRecomVO[] filteredArray = new DepositRecomVO[count];
+int index = 0;
+for (DepositRecomVO vo : tgtDepositVO) {
+    if (vo != null) {
+        filteredArray[index++] = vo;
+    }
+}
 
-// Convert back to array if needed
-tgtDepositVO = depositList.toArray(new DepositRecomVO[depositList.size()]);
+// Assign the filtered array back to tgtDepositVO
+tgtDepositVO = filteredArray;
+
+// Verify the result
+System.out.println("Filtered array size: " + tgtDepositVO.length);
+for (DepositRecomVO vo : tgtDepositVO) {
+    System.out.println(vo);
+}
