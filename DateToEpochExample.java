@@ -20,6 +20,13 @@ Conduct focused training sessions to educate the team on the latest features and
 Strengthen Governance and Compliance
 Update governance policies to ensure all rules and decision services are compliant with regulatory standards and organizational guidelines.
 
+Develop Leadership Skills and Transition into a Leadership Role
+
+Enhance strategic decision-making, communication, and conflict resolution skills.
+Take ownership of high-impact projects to demonstrate leadership capabilities.
+Mentor junior team members and guide them in ODM best practices.
+Actively participate in leadership training programs and networking opportunities.
+Seek and incorporate feedback from senior leadership to grow into a managerial or leadership position.
 Objectives:
 Cross-Training Program Execution
 Deliver at least four hands-on workshops or knowledge-sharing sessions to ensure all team members can handle ODM rule development and maintenance independently.
@@ -45,3 +52,10 @@ Foster collaboration by encouraging team members to contribute to the wikis, sha
 
 Monitor and Improve Customer Satisfaction
 Collect feedback from stakeholders and customers post-migration and improve processes to maintain satisfaction during this transition.
+
+Leadership Development Plan
+
+Attend at least two leadership training programs or workshops.
+Lead at least one major project end-to-end with executive-level visibility.
+Take on a mentorship role within the team to guide and support junior members.
+Improve presentation and stakeholder management skills through regular interactions with leadership.
