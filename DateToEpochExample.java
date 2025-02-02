@@ -1,61 +1,96 @@
-Goals:
-Successfully Migrate to IBM ODM 9.0
-Plan and execute a seamless migration to ODM 9.0, ensuring minimal downtime, compatibility with existing systems, and leveraging new features effectively.
+Option Explicit
 
-Cross-Train Team Members on IBM ODM
-Develop and implement a cross-training program to ensure all team members are proficient in IBM ODM development, deployment, and maintenance processes.
+Sub AutoLinkDataGeneric()
+    Dim ws As Worksheet
+    Dim srcCell As Range
+    Dim token As String
+    Dim tokens() As String
+    Dim delim As String
+    Dim targetWs As Worksheet
+    Dim foundCell As Range
+    Dim i As Long
 
-Develop Comprehensive ODM Wikis
-Create and maintain a centralized ODM knowledge base (wikis) to document processes, best practices, troubleshooting guides, and reusable patterns for the team.
+    ' Change this delimiter as needed (default is pipe character)
+    delim = "|"
+    
+    ' Turn off screen updating and automatic calculation to speed up processing
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    
+    ' Loop through every worksheet in the workbook
+    For Each ws In ThisWorkbook.Worksheets
+        ' Loop through each cell in the used range of the current sheet
+        For Each srcCell In ws.UsedRange
+            ' Only process cells that are not empty, do not have errors, and are not formulas
+            If Not IsEmpty(srcCell.Value) And Not IsError(srcCell.Value) And Not srcCell.HasFormula Then
+                ' Split the cell text into tokens using the delimiter
+                tokens = Split(CStr(srcCell.Value), delim)
+                ' Process each token individually
+                For i = LBound(tokens) To UBound(tokens)
+                    token = Trim(tokens(i))
+                    If token <> "" Then
+                        ' Search all other worksheets for an exact match of the token in column A
+                        For Each targetWs In ThisWorkbook.Worksheets
+                            ' Skip the source sheet
+                            If targetWs.Name <> ws.Name Then
+                                Set foundCell = FindTokenInColumnA(targetWs, token)
+                                If Not foundCell Is Nothing Then
+                                    ' Create a hyperlink in the source cell pointing to the found cell
+                                    CreateHyperlinkInCell srcCell, foundCell, token
+                                    Exit For  ' Exit the inner loop after the first match is found
+                                End If
+                            End If
+                        Next targetWs
+                    End If
+                Next i
+            End If
+        Next srcCell
+    Next ws
+    
+    ' Restore application settings
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    
+    MsgBox "Data linking complete!", vbInformation
+End Sub
 
-Implement Robust Regression Test Suites
-Build and automate regression test suites for all newly created decisions to ensure quality, reliability, and consistency across the rule execution lifecycle.
+Function FindTokenInColumnA(ws As Worksheet, token As String) As Range
+    Dim rng As Range
+    Dim cell As Range
+    
+    ' Use the used range’s column A to search for the token
+    On Error Resume Next
+    Set rng = ws.UsedRange.Columns(1)
+    On Error GoTo 0
+    
+    If rng Is Nothing Then
+        Set FindTokenInColumnA = Nothing
+        Exit Function
+    End If
+    
+    For Each cell In rng.Cells
+        If Not IsError(cell.Value) Then
+            ' Compare cell value (as a string) to the token
+            If CStr(cell.Value) = token Then
+                Set FindTokenInColumnA = cell
+                Exit Function
+            End If
+        End If
+    Next cell
+    
+    Set FindTokenInColumnA = Nothing
+End Function
 
-Enhance Rule Development Efficiency
-Streamline the design and deployment of business rules, aiming for a 15% improvement in efficiency and error reduction.
+Sub CreateHyperlinkInCell(srcCell As Range, targetCell As Range, displayText As String)
+    ' Delete any existing hyperlink from the source cell
+    On Error Resume Next
+    srcCell.Hyperlinks.Delete
+    On Error GoTo 0
+    
+    ' Create a hyperlink in the source cell pointing to the target cell in its worksheet
+    srcCell.Hyperlinks.Add Anchor:=srcCell, Address:="", _
+        SubAddress:="'" & targetCell.Parent.Name & "'!" & targetCell.Address, _
+        TextToDisplay:=displayText
+End Sub
 
-Upskill Team Members on ODM 9.0 Features
-Conduct focused training sessions to educate the team on the latest features and functionalities of ODM 9.0.
 
-Strengthen Governance and Compliance
-Update governance policies to ensure all rules and decision services are compliant with regulatory standards and organizational guidelines.
-
-Develop Leadership Skills and Transition into a Leadership Role
-
-Enhance strategic decision-making, communication, and conflict resolution skills.
-Take ownership of high-impact projects to demonstrate leadership capabilities.
-Mentor junior team members and guide them in ODM best practices.
-Actively participate in leadership training programs and networking opportunities.
-Seek and incorporate feedback from senior leadership to grow into a managerial or leadership position.
-Objectives:
-Cross-Training Program Execution
-Deliver at least four hands-on workshops or knowledge-sharing sessions to ensure all team members can handle ODM rule development and maintenance independently.
-
-ODM Wiki Creation and Maintenance
-Publish and continuously update a structured wiki with topics like:
-
-Migration strategies to ODM 9.0
-Common troubleshooting scenarios
-Best practices for rule modeling and deployment
-Guidelines for creating and managing regression tests
-Regression Testing Framework
-Develop a comprehensive regression testing framework:
-
-Automate test execution for all new and existing decisions.
-Include performance metrics and quality checks.
-Ensure the framework is scalable for future decision services.
-ODM 9.0 Migration Timeline
-Complete the migration by the defined deadline, ensuring full documentation and post-migration support processes are in place.
-
-Collaboration and Knowledge Sharing
-Foster collaboration by encouraging team members to contribute to the wikis, share insights from cross-training, and participate in joint problem-solving.
-
-Monitor and Improve Customer Satisfaction
-Collect feedback from stakeholders and customers post-migration and improve processes to maintain satisfaction during this transition.
-
-Leadership Development Plan
-
-Attend at least two leadership training programs or workshops.
-Lead at least one major project end-to-end with executive-level visibility.
-Take on a mentorship role within the team to guide and support junior members.
-Improve presentation and stakeholder management skills through regular interactions with leadership.
