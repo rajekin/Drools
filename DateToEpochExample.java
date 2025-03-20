@@ -1,13 +1,1 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class Test {
-    public static void main(String[] args) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        EmpowermentResponse response = new EmpowermentResponse();
-        response.setEmpowermentRestrictionDetails(new EmpowermentRestrictionDetails()); // Empty object
-
-        String json = objectMapper.writeValueAsString(response);
-        System.out.println(json); // Should print "{}" (without empty object)
-    }
-}
+Vignesh is a mid-level Rules Developer with strong expertise in Java, API Testing, and ODM. He efficiently handles mid-level projects with good code quality. His communication skills are at a mid-level, and he can benefit from further refinement. To support his growth, we plan to assign him more complex projects to challenge his technical abilities while also involving him in blog and article writing to enhance his communication skills.
