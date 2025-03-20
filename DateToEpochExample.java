@@ -1,1 +1,5 @@
-Poojitha Kotha is a junior to mid-level Analyst and QA who primarily handles small projects. While she is gaining experience, she needs to focus on enhancing her testing skills and improving her delivery speed. Additionally, increasing her involvement in API testing and decision modeling will strengthen her overall technical proficiency. The plan is to upskill her in these areas so she can take on more complex tasks and contribute more effectively.
+Subject: Team Skill Matrix and Next Development Plan
+
+Dear [Manager's Name],
+
+I have compiled the skill matrix for our developers and testers, including their current skills, proficiency levels in development and testing, and their respective development plans. This will help guide their growth and align their skillsets with upcoming project needs.
