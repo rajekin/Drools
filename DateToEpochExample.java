@@ -1,29 +1,28 @@
-private static OfficerCodes setOfficerCodes(String code1, String code2, String code3, DareRestrictRequest inputRest) {
-    OfficerCodes officerCodes = new OfficerCodes();
-
-    if (code1 != null) {
-        if (inputRest.getAccountDetails().getOfficerCodes().getCode1().equals(code1)) {
-            officerCodes.setCode1(null);
+private static StatementFields setStatementFields(String field1, String field3, String field4,
+                                                  DareRestrictRequest inputRest, StatementFields statementFields) {
+    if (field1 != null) {
+        if (inputRest.getAccountDetails().getStatementConfiguration().getStatementFields().getField1().equals(field1)) {
+            statementFields.setField1(null);
         } else {
-            officerCodes.setCode1(code1);
+            statementFields.setField1(field1);
         }
     }
 
-    if (code2 != null) {
-        if (inputRest.getAccountDetails().getOfficerCodes().getCode2().equals(code2)) {
-            officerCodes.setCode2(null);
+    if (field3 != null) {
+        if (inputRest.getAccountDetails().getStatementConfiguration().getStatementFields().getField3().equals(field3)) {
+            statementFields.setField3(null);
         } else {
-            officerCodes.setCode2(code2);
+            statementFields.setField3(field3);
         }
     }
 
-    if (code3 != null) {
-        if (inputRest.getAccountDetails().getOfficerCodes().getCode3().equals(code3)) {
-            officerCodes.setCode3(null);
+    if (field4 != null) {
+        if (inputRest.getAccountDetails().getStatementConfiguration().getStatementFields().getField4().equals(field4)) {
+            statementFields.setField4(null);
         } else {
-            officerCodes.setCode3(code3);
+            statementFields.setField4(field4);
         }
     }
 
-    return officerCodes;
+    return statementFields;
 }
