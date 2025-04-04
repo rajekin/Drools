@@ -1,11 +1,29 @@
-Subject: Clarification Needed on displayOrder Sequence for eSign Documents
+private static OfficerCodes setOfficerCodes(String code1, String code2, String code3, DareRestrictRequest inputRest) {
+    OfficerCodes officerCodes = new OfficerCodes();
 
-Hi [Recipient's Name],
+    if (code1 != null) {
+        if (inputRest.getAccountDetails().getOfficerCodes().getCode1().equals(code1)) {
+            officerCodes.setCode1(null);
+        } else {
+            officerCodes.setCode1(code1);
+        }
+    }
 
-I hope you're doing well.
+    if (code2 != null) {
+        if (inputRest.getAccountDetails().getOfficerCodes().getCode2().equals(code2)) {
+            officerCodes.setCode2(null);
+        } else {
+            officerCodes.setCode2(code2);
+        }
+    }
 
-While reviewing the eSign document configuration, I noticed a discrepancy between the display order in the decision model and the one documented in the wiki (see screenshot attached). The decision model uses a sequential display order, whereas the wiki defines fixed numbers for displayOrder (e.g., 1, 3, etc.).
+    if (code3 != null) {
+        if (inputRest.getAccountDetails().getOfficerCodes().getCode3().equals(code3)) {
+            officerCodes.setCode3(null);
+        } else {
+            officerCodes.setCode3(code3);
+        }
+    }
 
-Could you please confirm which one we should follow as the source of truth? If the decision model sequence is preferred, should we update the wiki accordingly—or vice versa?
-
-Looking forward to your clarification so we can proceed with consistency.
+    return officerCodes;
+}
