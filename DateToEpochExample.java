@@ -1,10 +1,5 @@
-Hi Sarah,
+Hi Marilyn,
 
-Thank you for following up.
+Thank you for your message.
 
-At this time, we haven’t prioritized the DARE rules migration to the v9 test environment, as we are still awaiting confirmation that the production environment is fully ready to support this transition. Once we have clarity on the production readiness, we will be in a better position to define a timeline and allocate effort accordingly.
-
-I’ll keep you posted as soon as we have more concrete updates.
-
-Best regards,
-Raj
+The BRMS team does not have ownership of the environment setup, including the Test RES. As such, we are not authorized to deploy any rulesets to the Test RES without the appropriate approvals. For assistance with both the production readiness and any test environment validation, Nathan Marr would be the appropriate point of contact.
