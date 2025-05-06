@@ -1,10 +1,10 @@
-Hi Team,
+Hi Sarah,
 
-As V9 ODM RES is now available in TEST, we will be proceeding with development of all in-progress applications directly in V9.
+Thank you for following up.
 
-Could you please assess and let me know what it would take to move all in-progress applications to V9—including any effort, dependencies, or potential risks?
+At this time, we haven’t prioritized the DARE rules migration to the v9 test environment, as we are still awaiting confirmation that the production environment is fully ready to support this transition. Once we have clarity on the production readiness, we will be in a better position to define a timeline and allocate effort accordingly.
 
-Thank you,
+I’ll keep you posted as soon as we have more concrete updates.
 
-
-Assessment Needed: Migration of In-Progress Apps to V9
+Best regards,
+Raj
