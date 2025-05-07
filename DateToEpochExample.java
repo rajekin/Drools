@@ -1,6 +1,3 @@
-Recommend replacing
-make it false that the hold action result of 'the response' is hold action allowed ;
-with the more explicit and readable form:
-set the hold action allowed of the hold action result of the response to false ;
+Modeling Recommendation:
 
-This improves clarity and aligns better with BRL best practices by explicitly referencing the object and its property, avoiding the ambiguous use of make it.
+The transition leading to "Add Invalid Holds" should originate from the branch (decision) node, not directly from the "Add Valid Holds" rule task. This ensures logical clarity in the flow and accurately represents the decision logic being evaluated at the branch node. Connecting transitions from the decision node also improves maintainability and aligns with standard modeling best practices.
