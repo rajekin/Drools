@@ -1,7 +1,32 @@
-Subject: Teams Testing Older Version – Please Validate Against Latest v1.1
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-Hi [Lead's Name],
+public class CombineJsonFiles {
+    public static void main(String[] args) {
+        // Folder containing individual JSON files
+        String inputFolder = "path/to/your/json/folder";
+        // Output file that Postman Runner can use
+        String outputFile = "path/to/output/data.json";
 
-I wanted to bring to your attention that some of the teams are currently testing against an older version of the service. A few individuals have reached out to me regarding discrepancies that are actually addressed in version 1.1, which is already deployed and available in the test environment.
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode combinedArray = mapper.createArrayNode();
 
-Could you please help communicate to the respective testing teams to ensure they validate against the latest v1.1 version?
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(inputFolder), "*.json")) {
+            for (Path entry : stream) {
+                JsonNode json = mapper.readTree(entry.toFile());
+                combinedArray.add(json);
+            }
+
+            // Write combined array to data.json
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputFile), combinedArray);
+            System.out.println("Combined JSON written to: " + outputFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
