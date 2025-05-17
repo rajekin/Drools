@@ -1,32 +1,5 @@
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-public class CombineJsonFiles {
-    public static void main(String[] args) {
-        // Folder containing individual JSON files
-        String inputFolder = "path/to/your/json/folder";
-        // Output file that Postman Runner can use
-        String outputFile = "path/to/output/data.json";
-
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode combinedArray = mapper.createArrayNode();
-
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(inputFolder), "*.json")) {
-            for (Path entry : stream) {
-                JsonNode json = mapper.readTree(entry.toFile());
-                combinedArray.add(json);
-            }
-
-            // Write combined array to data.json
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(outputFile), combinedArray);
-            System.out.println("Combined JSON written to: " + outputFile);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+| **Profile**   | **CPU (Req/Limit)** | **Memory (Req/Limit)** | **Replicas** | **Max Projects** | **Concurrent Users** | **Performance Notes**                                                                  |
+| ------------- | ------------------- | ---------------------- | ------------ | ---------------- | -------------------- | -------------------------------------------------------------------------------------- |
+| 🟢 **Small**  | 1 vCPU / 1 vCPU     | 4 GiB / 4 GiB          | 1            | 5–8              | 1–2                  | ❌ Slowness with >6 projects or users; delayed saves/deploys; not suited for production |
+| 🟡 **Medium** | 1 vCPU / 1 vCPU     | 4 GiB / 8 GiB          | 2            | 15–20            | 4–6                  | ✅ Suitable for most production workloads; stable with moderate load                    |
+| 🔴 **Large**  | 2 vCPU / 2 vCPU     | 4 GiB / 16 GiB         | 2            | 25–40+           | 8–12+                | 🚀 Optimized for heavy rule editing, many users, or large-scale deployments            |
