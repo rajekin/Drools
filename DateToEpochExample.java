@@ -1,9 +1,15 @@
-Subject: ODM v9 Decision Center – Certification Paused Due to Performance Issues
+We’ve completed the Decision Center (DC) certification for the Rating project. As part of this effort, we conducted a comprehensive validation of rule execution across both ODM 8.11 and v9 environments.
 
-Hi [Manager's Name],
+Certification Process Summary:
 
-I wanted to bring to your attention some critical performance issues we've encountered while certifying the ODM v9 Decision Center.
+Executed end-to-end Decision Center testing in both environments.
 
-During our test execution across multiple rule projects, we observed significant UI slowness and frequent timeouts, especially while running automated test cases. This level of instability is currently impacting our ability to complete the certification reliably.
+Verified the rules execution sequence and confirmed consistency across versions.
 
-Given these challenges, we are pausing the certification effort until the performance concerns are addressed and a stable testing environment is ensured.
+Conducted API-level validation using the defined JSON payloads.
+
+Captured and compared processing times and assertion results across regions.
+
+All test artifacts, including execution logs, performance comparisons, and assertion results, are attached for your reference.
+
+Please let me know if you have any questions or need further details.
