@@ -1,11 +1,11 @@
-Update on Communication Process with Business and IT Teams
+Request for Individual Skip-Level Meeting
 
-Dear Team,
+Hi [Manager’s Manager’s Name],
 
-I’d like to inform you of an update regarding our communication process with the business and IT teams.
+I hope you're doing well. I understand that skip-level meetings are typically conducted at the team level, but I was hoping to request a one-on-one conversation with you if your schedule allows.
 
-Up until now, all communication — including test results and business queries — has been routed exclusively through Aisha. Moving forward, while test case results should still typically be communicated via Aisha, testers and developers are now encouraged to directly engage with business or IT teams as needed. If you are comfortable, you may respond to their questions or concerns directly.
+I’d really appreciate the opportunity to share some personal insights and feedback, and also to gain a better understanding of your perspective on the broader direction of the team and organization.
 
-Please note: If any of these discussions result in additional work for you or lead to a change in the direction or decisions you are currently working on, it is your responsibility to keep the team informed. Clear communication will help us stay aligned and avoid any confusion.
+Please let me know if this would be possible and if there’s a convenient time in the coming weeks. I’m happy to accommodate your availability.
 
-Feel free to reach out if you have any questions or need clarification.
+Thank you for your time and consideration.
