@@ -1,9 +1,11 @@
-Include Testers in Analyst/IT Meetings
+Update on Communication Process with Business and IT Teams
 
-Hi Team,
+Dear Team,
 
-Going forward, please make sure to include our testers in any meetings or discussions involving Analysts or IT teams. Their involvement early on will help ensure better understanding of requirements, clarify expectations, and catch potential issues upfront.
+I’d like to inform you of an update regarding our communication process with the business and IT teams.
 
-Let’s make this a standard practice to improve collaboration and efficiency across teams.
+Up until now, all communication — including test results and business queries — has been routed exclusively through Aisha. Moving forward, while test case results should still typically be communicated via Aisha, testers and developers are now encouraged to directly engage with business or IT teams as needed. If you are comfortable, you may respond to their questions or concerns directly.
 
-Thank you!
+Please note: If any of these discussions result in additional work for you or lead to a change in the direction or decisions you are currently working on, it is your responsibility to keep the team informed. Clear communication will help us stay aligned and avoid any confusion.
+
+Feel free to reach out if you have any questions or need clarification.
