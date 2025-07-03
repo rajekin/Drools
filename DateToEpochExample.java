@@ -1,11 +1,11 @@
-Request for Individual Skip-Level Meeting
+Hi Nathan,
 
-Hi [Manager’s Manager’s Name],
+Thank you for setting up the wiki to document security group assignments.
 
-I hope you're doing well. I understand that skip-level meetings are typically conducted at the team level, but I was hoping to request a one-on-one conversation with you if your schedule allows.
+However, I wanted to share some concerns. The process you've outlined is manual and slows down the overall BRMS lifecycle. v9 Decision Center already provides an automated way to assign groups to projects, and any audit requirements can be addressed using built-in Decision Center reports.
 
-I’d really appreciate the opportunity to share some personal insights and feedback, and also to gain a better understanding of your perspective on the broader direction of the team and organization.
+Rather than relying on external documentation, we should focus on automation and on fully leveraging the capabilities of ODM. At this point, we're not utilizing several key features that are designed to streamline governance and reduce manual intervention.
 
-Please let me know if this would be possible and if there’s a convenient time in the coming weeks. I’m happy to accommodate your availability.
+Additionally, the responsibility of managing publishing and group assignments should ideally lie with the system administrator—not with developers. Right now, we are dependent on you to enable publishing whenever a new Decision Service is promoted to a region, which introduces unnecessary delays.
 
-Thank you for your time and consideration.
+To align on a more efficient and scalable approach, could you please schedule a meeting with Dave, Brian, Rob, and yourself at the earliest convenience?
