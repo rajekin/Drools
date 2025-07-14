@@ -1,9 +1,4 @@
-Hi Brian,
+ODM is not primarily a data validation tool. When a contract defines a value as mandatory, we expect that to be enforced at the source. It’s the sender's responsibility to ensure that valid data is being sent—otherwise, it becomes a classic case of “garbage in, garbage out.”
 
-Thank you for your note.
+That said, I'm happy to explore ways we can improve this and make it more robust. Let's discuss some options in our upcoming meeting.
 
-We did maintain a log of these issues in the past, but it proved to be of limited value as it didn’t lead to actionable outcomes or help prevent recurrence. Given that, we eventually discontinued it.
-
-That said, I believe it's primarily the responsibility of the system administration team to monitor and maintain the health of the test regions. They are better positioned to track uptime, response metrics, and report systemic issues proactively.
-
-Happy to collaborate if there’s a broader solution being considered, but just wanted to clarify the historical context and roles.
