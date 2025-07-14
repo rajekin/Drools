@@ -1,4 +1,5 @@
-ODM is not primarily a data validation tool. When a contract defines a value as mandatory, we expect that to be enforced at the source. It’s the sender's responsibility to ensure that valid data is being sent—otherwise, it becomes a classic case of “garbage in, garbage out.”
+ODM Validation – Brainstorming Improvements
 
-That said, I'm happy to explore ways we can improve this and make it more robust. Let's discuss some options in our upcoming meeting.
+Hi Justin,
 
+I've scheduled a meeting to discuss the ODM validation topic further. Looking forward to aligning on expectations and exploring ways to improve the process.
