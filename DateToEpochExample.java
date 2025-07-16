@@ -1,11 +1,9 @@
-Discussion with Justin Fleer on Business Rule Validation and v9 Capabilities
+Hi Dave,
 
-Hi Brian,
+Thanks for following up.
 
-I had a chance to connect with Justin Fleer recently. We discussed how we could introduce business validation rules to flag and return error messages when required attributes or conditions are not met in the incoming requests.
+This email was primarily to keep Brian in the loop, as he wasn’t able to attend the meeting with Justin due to a scheduling conflict. To give more context — DAX encountered an issue in production where one of the decisions returned an incorrect response. Upon investigation, we found that a required attribute was missing in the request payload, which led to the issue.
 
-Justin acknowledged that it's the source system’s responsibility to comply with the contract and ensure all required attributes are included before sending data to the ODM. I also shared that we can implement negative test scenarios to observe how the system behaves—for instance, what happens when required attributes are missing from the request.
+In our discussion, Justin raised the question of how we can better handle such scenarios going forward. We talked about introducing business validation rules to flag missing attributes early and return meaningful error messages, rather than allowing the request to proceed and potentially result in a faulty decision.
 
-Additionally, I asked Justin if they are currently leveraging Snowflake data. I took the opportunity to explain some of the features introduced in version 9, particularly the support for running PMML models, and inquired if they have any use cases that could benefit from this capability.
-
-Let me know if you'd like to sync further on this.
+No formal policy has been developed yet — this is more of an early exploration to see how we can strengthen validation logic and improve contract adherence across source systems. If this evolves into a broader policy or implementation approach, we’ll certainly document and communicate it to all DO teams accordingly.
