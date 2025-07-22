@@ -1,43 +1,7 @@
-let jsonData = pm.response.json();
+Subject: Clarification on New Attributes in DAX BPE System Wiki
 
-const expectedDepositRecomm = [
-    {
-        seqNR: 1,
-        hold: 1,
-        businessHoldDays: 1,
-        amount: 8000,
-        triggerEvent: "ITEMPROCESSING",
-        holdReasonCode: "RSN"
-    },
-    {
-        seqNR: 2,
-        hold: 0,
-        businessHoldDays: 0,
-        amount: 0,
-        triggerEvent: "ITEMPROCESSING",
-        holdReasonCode: "RSN"
-    },
-    {
-        seqNR: 3,
-        hold: 0,
-        businessHoldDays: 0,
-        amount: 0,
-        triggerEvent: "ITEMPROCESSING",
-        holdReasonCode: "RSN"
-    }
-];
+Hi [POC's Name],
 
-pm.test("depositRecomm array matches expected items", function () {
-    pm.expect(jsonData.depositRecomm.length).to.eql(expectedDepositRecomm.length);
+I noticed that two new attributes – stylingType and isJointProduct – have been added to the DAX Bank Product Eligibility (BPE) system wiki. However, we do not currently see them reflected in the 3.1 version of the model, which we are actively working on.
 
-    jsonData.depositRecomm.forEach((item, index) => {
-        const expected = expectedDepositRecomm[index];
-
-        pm.expect(item.seqNR).to.eql(expected.seqNR);
-        pm.expect(item.hold).to.eql(expected.hold);
-        pm.expect(item.businessHoldDays).to.eql(expected.businessHoldDays);
-        pm.expect(Number(item.amount)).to.eql(Number(expected.amount));  // numeric comparison
-        pm.expect(item.triggerEvent).to.eql(expected.triggerEvent);
-        pm.expect(item.holdReasonCode).to.eql(expected.holdReasonCode);
-    });
-});
+Could you please confirm which version these attributes are intended to be part of
