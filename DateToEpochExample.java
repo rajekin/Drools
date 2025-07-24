@@ -1,7 +1,29 @@
-Subject: Clarification on New Attributes in DAX BPE System Wiki
+import java.util.Calendar;
+import java.util.Date;
 
-Hi [POC's Name],
+public class TestAccountVelocityUtils {
 
-I noticed that two new attributes – stylingType and isJointProduct – have been added to the DAX Bank Product Eligibility (BPE) system wiki. However, we do not currently see them reflected in the 3.1 version of the model, which we are actively working on.
+    public static void main(String[] args) {
+        // Create two dates using Calendar
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(2025, Calendar.JULY, 24);  // 24 July 2025
 
-Could you please confirm which version these attributes are intended to be part of
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(2025, Calendar.JULY, 10);  // 10 July 2025
+
+        Date date1 = cal1.getTime();
+        Date date2 = cal2.getTime();
+
+        // Call the method and print result
+        Integer daysDiff = AccountVelocityUtils.daysBetweenDates(date1, date2);
+        System.out.println("Days between dates: " + daysDiff);
+
+        // Try with reversed dates
+        Integer reversedDaysDiff = AccountVelocityUtils.daysBetweenDates(date2, date1);
+        System.out.println("Days between reversed dates: " + reversedDaysDiff);
+
+        // Try with same date
+        Integer sameDayDiff = AccountVelocityUtils.daysBetweenDates(date1, date1);
+        System.out.println("Days between same dates: " + sameDayDiff);
+    }
+}
