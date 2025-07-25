@@ -1,29 +1,9 @@
-import java.util.Calendar;
-import java.util.Date;
+Hey Chaitanya,
 
-public class TestAccountVelocityUtils {
+Thanks for the update. Just had a quick question — since we’re the primary users of the V9 Test DC, how are we usually informed about changes like the SAT to ATL migration?
 
-    public static void main(String[] args) {
-        // Create two dates using Calendar
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(2025, Calendar.JULY, 24);  // 24 July 2025
+It’s a bit confusing right now since Test is on SAT and Prod is on ATL. We only became aware of the issue after the system was already down on our end. It would be helpful to understand how these updates are communicated — or if there’s a better way we can stay in the loop going forward.
 
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(2025, Calendar.JULY, 10);  // 10 July 2025
+Also, how can we avoid unnecessary back and forth during these situations? A quick heads-up or centralized update could help a lot with reducing delays and confusion on both sides.
 
-        Date date1 = cal1.getTime();
-        Date date2 = cal2.getTime();
-
-        // Call the method and print result
-        Integer daysDiff = AccountVelocityUtils.daysBetweenDates(date1, date2);
-        System.out.println("Days between dates: " + daysDiff);
-
-        // Try with reversed dates
-        Integer reversedDaysDiff = AccountVelocityUtils.daysBetweenDates(date2, date1);
-        System.out.println("Days between reversed dates: " + reversedDaysDiff);
-
-        // Try with same date
-        Integer sameDayDiff = AccountVelocityUtils.daysBetweenDates(date1, date1);
-        System.out.println("Days between same dates: " + sameDayDiff);
-    }
-}
+Appreciate your thoughts on this!
